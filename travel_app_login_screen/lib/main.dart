@@ -1,8 +1,19 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:travel_app_login_screen/wave_animation.dart';
+
+import 'animated_boat.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.dark,
+          systemNavigationBarIconBrightness:
+              Brightness.light,
+          systemNavigationBarColor: Colors.black,
+          systemNavigationBarDividerColor:
+              Colors.black));
+
   runApp(const MyApp());
 }
 
@@ -17,246 +28,180 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const Travel2(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage>
-    with TickerProviderStateMixin {
-  late AnimationController controller1;
-  late Animation<double> startingHeightFactorAnimation;
-
-  late AnimationController controller2;
-  late Animation<double> endingHeightFactorAnimation;
-
-  late AnimationController controller3;
-  late Animation<double>
-      firstCurveHeightFactorAnimation;
-
-  late AnimationController controller4;
-  late Animation<double>
-      secondCurveHeightFactorAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller1 = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 1500));
-    startingHeightFactorAnimation =
-        Tween<double>(begin: 0.51, end: 0.46).animate(
-            CurvedAnimation(
-                parent: controller1,
-                curve: Curves.easeInOut))
-          ..addListener(() {
-            setState(() {});
-          })
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              controller1.reverse();
-            } else if (status ==
-                AnimationStatus.dismissed) {
-              controller1.forward();
-            }
-          });
-
-    controller2 = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 1500));
-    endingHeightFactorAnimation =
-        Tween<double>(begin: 0.46, end: 0.50).animate(
-            CurvedAnimation(
-                parent: controller2,
-                curve: Curves.easeInOut))
-          ..addListener(() {
-            setState(() {});
-          })
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              controller2.reverse();
-            } else if (status ==
-                AnimationStatus.dismissed) {
-              controller2.forward();
-            }
-          });
-
-    controller3 = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 1500));
-    firstCurveHeightFactorAnimation =
-        Tween<double>(begin: 0.38, end: 0.65).animate(
-            CurvedAnimation(
-                parent: controller3,
-                curve: Curves.easeInOut))
-          ..addListener(() {
-            setState(() {});
-          })
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              controller3.reverse();
-            } else if (status ==
-                AnimationStatus.dismissed) {
-              controller3.forward();
-            }
-          });
-
-    controller4 = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 1500));
-    secondCurveHeightFactorAnimation =
-        Tween<double>(begin: 0.60, end: 0.35).animate(
-            CurvedAnimation(
-                parent: controller4,
-                curve: Curves.easeInOut))
-          ..addListener(() {
-            setState(() {});
-          })
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              controller4.reverse();
-            } else if (status ==
-                AnimationStatus.dismissed) {
-              controller4.forward();
-            }
-          });
-
-    controller4.forward();
-
-    Timer(const Duration(milliseconds: 800), () {
-      controller3.forward();
-    });
-    //
-    Timer(const Duration(milliseconds: 1200), () {
-      controller2.forward();
-    });
-    //
-    Timer(const Duration(milliseconds: 1600), () {
-      controller1.forward();
-    });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    controller1.dispose();
-    controller2.dispose();
-    controller3.dispose();
-    controller4.dispose();
-    super.dispose();
-  }
+class Travel2 extends StatelessWidget {
+  const Travel2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("hehe"),
-      ),
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Positioned(
-                top: 100,
-                child: SizedBox(
-                  height: MediaQuery.of(context)
-                      .size
-                      .height,
-                  width: MediaQuery.of(context)
-                      .size
-                      .width,
-                  child: CustomPaint(
-                    painter: WavePainter(
-                        widthFactor: 0.3,
-                        startingHeightFactor:
-                            startingHeightFactorAnimation
-                                .value,
-                        height2Factor:
-                            firstCurveHeightFactorAnimation
-                                .value,
-                        height3Factor:
-                            secondCurveHeightFactorAnimation
-                                .value,
-                        endingHeightFactor:
-                            endingHeightFactorAnimation
-                                .value,
-                        waveColor: Colors.blue
-                            .withOpacity(0.7)),
+    return Container(
+        color: Colors.black,
+        child: Stack(children: [
+          Positioned(
+              bottom: 0,
+              child: SizedBox(
+                height:
+                    MediaQuery.of(context).size.height,
+                width:
+                    MediaQuery.of(context).size.width,
+                child: WaveAnimation(
+                  color: Colors.blue.withOpacity(0.2),
+                  heightStartMin: 1.2,
+                  heightStartMax: 1.2,
+                  firstRiseStartMin: 1.1,
+                  firstRiseStartMax: 1.45,
+                  secondRiseStartMin: 1.1,
+                  secondRiseStartMax: 1.4,
+                  heightEndMin: 1.15,
+                  heightEndMax: 1.35,
+                  delay: 0,
+                ),
+              )),
+          const Positioned(
+              left: 0,
+              right: 0,
+              bottom: 215,
+              child: AnimatedBoat()),
+          Positioned(
+              bottom: 0,
+              child: SizedBox(
+                height:
+                    MediaQuery.of(context).size.height,
+                width:
+                    MediaQuery.of(context).size.width,
+                child: WaveAnimation(
+                  color: Colors.lightBlueAccent
+                      .withOpacity(0.8),
+                ),
+              )),
+          Positioned(
+              bottom: 0,
+              child: SizedBox(
+                height:
+                    MediaQuery.of(context).size.height,
+                width:
+                    MediaQuery.of(context).size.width,
+                child: WaveAnimation(
+                  color: Colors.lightBlueAccent
+                      .withOpacity(0.5),
+                  heightStartMin: 1.22,
+                  heightStartMax: 1.35,
+                  firstRiseStartMin: 1.15,
+                  firstRiseStartMax: 1.45,
+                  secondRiseStartMax: 1.4,
+                  heightEndMax: 1.4,
+                  delay: 500,
+                ),
+              )),
+          Positioned(
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Stack(
+                children: [
+                  Positioned(
+                      top: 10,
+                      left: 0,
+                      right: 0,
+                      child: SizedBox(
+                        child: Center(
+                          child: Image.asset(
+                            'assets/images/travel1.png',
+                            fit: BoxFit.scaleDown,
+                            alignment:
+                                Alignment.bottomCenter,
+                            height: 150,
+                            width: 180,
+                          ),
+                        ),
+                      )),
+                  const Positioned(
+                    top: 180,
+                    left: 30,
+                    right: 30,
+                    child: SizedBox(
+                      child: CustomTextField(
+                        prefixIconData: Icons.person,
+                        hint: "username",
+                      ),
+                    ),
                   ),
-                )),
-          ],
-        ),
-      ),
-    );
+                  const Positioned(
+                    left: 30,
+                    right: 30,
+                    top: 250,
+                    child: SizedBox(
+                      child: CustomTextField(
+                        prefixIconData:
+                            Icons.vpn_key_rounded,
+                        hint: "password",
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                      bottom: 30,
+                      left: 0,
+                      right: 0,
+                      child: Column(
+                        children: [
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: ButtonStyle(),
+                            child: const Text(
+                              "LOGIN",
+                              textScaleFactor: 1.6,
+                              style: TextStyle(
+                                  color: Colors.white),
+                            ),
+                          ),
+                          const Text(
+                            "Forgot Password?",
+                            textScaleFactor: 0.8,
+                            style: TextStyle(
+                                color: Colors.white),
+                          )
+                        ],
+                      ))
+                ],
+              ),
+            ),
+          ),
+        ]));
   }
 }
 
-class WavePainter extends CustomPainter {
-  // here factor means what number should I be
-  // multiplying the height and width of the canvas
-  // basically what percent of canvas height/width
+class CustomTextField extends StatelessWidget {
+  final IconData prefixIconData;
+  final String hint;
 
-  final double widthFactor;
-  final double startingHeightFactor;
-  final double height2Factor;
-  final double height3Factor;
-  final double endingHeightFactor;
-  final Color waveColor;
-
-  WavePainter(
-      {required this.widthFactor,
-      required this.startingHeightFactor,
-      required this.height2Factor,
-      required this.height3Factor,
-      required this.endingHeightFactor,
-      required this.waveColor});
+  const CustomTextField(
+      {super.key,
+      required this.prefixIconData,
+      required this.hint});
 
   @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint();
-    paint
-      ..color = waveColor
-      ..style = PaintingStyle.fill;
-
-    // we need 4 points here
-    var path = Path();
-
-    // point 1 -> where it all starts
-    path.moveTo(0, size.height * startingHeightFactor);
-
-    path.cubicTo(
-        // point 2 -> where we make first curve
-        // here we need to change width in negligible
-        // amount
-        // but height in little more
-        size.width * widthFactor,
-        size.height * height2Factor,
-
-        // point 3 -> where we make second curve
-        size.width * (widthFactor + 0.4),
-        size.height * height3Factor,
-
-        // point 4 -> where it all stops
-        size.width,
-        size.height * endingHeightFactor);
-
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(
-      covariant CustomPainter oldDelegate) {
-    return true;
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.white),
+          borderRadius: const BorderRadius.all(
+              Radius.circular(20))),
+      child: TextField(
+        style: const TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: hint,
+            hintStyle:
+                const TextStyle(color: Colors.white54),
+            prefixIcon: Icon(
+              prefixIconData,
+              color: Colors.white,
+            )),
+      ),
+    );
   }
 }
