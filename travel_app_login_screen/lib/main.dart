@@ -5,14 +5,11 @@ import 'package:travel_app_login_screen/wave_animation.dart';
 import 'animated_boat.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.dark,
-          systemNavigationBarIconBrightness:
-              Brightness.light,
-          systemNavigationBarColor: Colors.black,
-          systemNavigationBarDividerColor:
-              Colors.black));
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.dark,
+      systemNavigationBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.black,
+      systemNavigationBarDividerColor: Colors.black));
 
   runApp(const MyApp());
 }
@@ -24,17 +21,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Travel2(),
+      home: const Travel(),
     );
   }
 }
 
-class Travel2 extends StatelessWidget {
-  const Travel2({Key? key}) : super(key: key);
+class Travel extends StatelessWidget {
+  const Travel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +42,8 @@ class Travel2 extends StatelessWidget {
           Positioned(
               bottom: 0,
               child: SizedBox(
-                height:
-                    MediaQuery.of(context).size.height,
-                width:
-                    MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
                 child: WaveAnimation(
                   color: Colors.blue.withOpacity(0.2),
                   heightStartMin: 1.2,
@@ -62,32 +58,23 @@ class Travel2 extends StatelessWidget {
                 ),
               )),
           const Positioned(
-              left: 0,
-              right: 0,
-              bottom: 215,
-              child: AnimatedBoat()),
+              left: 0, right: 0, bottom: 215, child: AnimatedBoat()),
           Positioned(
               bottom: 0,
               child: SizedBox(
-                height:
-                    MediaQuery.of(context).size.height,
-                width:
-                    MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
                 child: WaveAnimation(
-                  color: Colors.lightBlueAccent
-                      .withOpacity(0.8),
+                  color: Colors.lightBlueAccent.withOpacity(0.8),
                 ),
               )),
           Positioned(
               bottom: 0,
               child: SizedBox(
-                height:
-                    MediaQuery.of(context).size.height,
-                width:
-                    MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
                 child: WaveAnimation(
-                  color: Colors.lightBlueAccent
-                      .withOpacity(0.5),
+                  color: Colors.lightBlueAccent.withOpacity(0.5),
                   heightStartMin: 1.22,
                   heightStartMax: 1.35,
                   firstRiseStartMin: 1.15,
@@ -111,8 +98,7 @@ class Travel2 extends StatelessWidget {
                           child: Image.asset(
                             'assets/images/travel1.png',
                             fit: BoxFit.scaleDown,
-                            alignment:
-                                Alignment.bottomCenter,
+                            alignment: Alignment.bottomCenter,
                             height: 150,
                             width: 180,
                           ),
@@ -135,8 +121,7 @@ class Travel2 extends StatelessWidget {
                     top: 250,
                     child: SizedBox(
                       child: CustomTextField(
-                        prefixIconData:
-                            Icons.vpn_key_rounded,
+                        prefixIconData: Icons.vpn_key_rounded,
                         hint: "password",
                       ),
                     ),
@@ -153,15 +138,13 @@ class Travel2 extends StatelessWidget {
                             child: const Text(
                               "LOGIN",
                               textScaleFactor: 1.6,
-                              style: TextStyle(
-                                  color: Colors.white),
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
                           const Text(
                             "Forgot Password?",
                             textScaleFactor: 0.8,
-                            style: TextStyle(
-                                color: Colors.white),
+                            style: TextStyle(color: Colors.white),
                           )
                         ],
                       ))
@@ -178,9 +161,7 @@ class CustomTextField extends StatelessWidget {
   final String hint;
 
   const CustomTextField(
-      {super.key,
-      required this.prefixIconData,
-      required this.hint});
+      {super.key, required this.prefixIconData, required this.hint});
 
   @override
   Widget build(BuildContext context) {
@@ -188,15 +169,13 @@ class CustomTextField extends StatelessWidget {
       height: 50,
       decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
-          borderRadius: const BorderRadius.all(
-              Radius.circular(20))),
+          borderRadius: const BorderRadius.all(Radius.circular(20))),
       child: TextField(
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hint,
-            hintStyle:
-                const TextStyle(color: Colors.white54),
+            hintStyle: const TextStyle(color: Colors.white54),
             prefixIcon: Icon(
               prefixIconData,
               color: Colors.white,

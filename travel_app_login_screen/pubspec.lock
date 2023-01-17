@@ -74,15 +74,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  keyboard_visibility:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "981f6794718654cb30b36e403505fe1ff502205b"
-      url: "https://github.com/adee42/flutter_keyboard_visibility"
-    source: git
-    version: "0.5.6"
   lints:
     dependency: transitive
     description:
@@ -181,4 +172,3 @@ packages:
     version: "0.2.2"
 sdks:
   dart: ">=2.17.6 <3.0.0"
-  flutter: ">=0.1.4"
