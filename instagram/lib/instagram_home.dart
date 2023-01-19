@@ -4,6 +4,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+/// First create a
+
 class InstagramHome extends StatelessWidget {
   const InstagramHome({Key? key}) : super(key: key);
 
@@ -65,8 +67,7 @@ class InstagramHome extends StatelessWidget {
                 itemCount: stories.length,
                 itemBuilder: (context, index) {
                   return StoryWidget(
-                    assetName: stories[
-                        stories.length - index - 1],
+                    assetName: stories[stories.length - index - 1],
                     username: usernames[index],
                   );
                 }),
@@ -91,129 +92,13 @@ class InstagramHome extends StatelessWidget {
 }
 
 /// Widgets
-class PostWidget extends StatelessWidget {
-  final int index;
-
-  const PostWidget({Key? key, required this.index})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
-          /// user image and username
-          Container(
-            margin: EdgeInsets.only(bottom: 3, top: 2),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 3,
-                ),
-                Container(
-                  padding: EdgeInsets.all(3),
-                  margin: EdgeInsets.only(right: 5),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient:
-                        LinearGradient(colors: colors),
-                  ),
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage(
-                        stories[stories.length -
-                            index -
-                            1]),
-                    radius: 15,
-                  ),
-                ),
-                Text(
-                  " ${dummyPosts[index].username}",
-                  textScaleFactor: 1.2,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700),
-                ),
-                Spacer(),
-                Icon(
-                  Icons.more_vert,
-                  color: Colors.black.withOpacity(0.6),
-                )
-              ],
-            ),
-          ),
-
-          /// main content - image
-          Image.asset(
-            dummyPosts[index].image,
-            fit: BoxFit.fitHeight,
-          ),
-
-          /// like,comment,share, ... , save
-          Row(
-            children: [
-              dummyPosts[index].isLiked
-                  ? PostWidgetIcon(
-                      icon: Icons.favorite,
-                      color: Colors.red)
-                  : PostWidgetIcon(
-                      icon: Icons.favorite_border),
-              PostWidgetIcon(
-                  icon: Icons.comment_bank_rounded),
-              RotatedSendMessageIcon(size: 35),
-              Spacer(),
-              PostWidgetIcon(
-                  icon: Icons.bookmark_border),
-              Divider(),
-            ],
-          ),
-
-          /// Captions and stuff
-          Container(
-            padding: EdgeInsets.only(left: 12),
-            alignment: Alignment.centerLeft,
-            child: RichText(
-              maxLines: 2,
-              text: TextSpan(
-                style: TextStyle(
-                    color: Colors.black,
-                    overflow: TextOverflow.ellipsis),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: dummyPosts[index]
-                          .username
-                          .toString(),
-                      style: TextStyle(
-                          fontWeight:
-                              FontWeight.w700)),
-                  TextSpan(
-                      text:
-                          '   ${dummyPosts[index].caption}'),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Divider(
-            height: 10,
-            thickness: 0.5,
-            color: Colors.black26,
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class StoryWidget extends StatelessWidget {
   final String assetName;
   final String username;
 
   const StoryWidget(
-      {Key? key,
-      required this.assetName,
-      required this.username})
+      {Key? key, required this.assetName, required this.username})
       : super(key: key);
 
   @override
@@ -251,15 +136,113 @@ class StoryWidget extends StatelessWidget {
   }
 }
 
+class PostWidget extends StatelessWidget {
+  final int index;
+
+  const PostWidget({Key? key, required this.index}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        children: [
+          /// user image and username
+          Container(
+            margin: EdgeInsets.only(bottom: 3, top: 2),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 3,
+                ),
+                Container(
+                  padding: EdgeInsets.all(3),
+                  margin: EdgeInsets.only(right: 5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(colors: colors),
+                  ),
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage(
+                        stories[stories.length - index - 1]),
+                    radius: 15,
+                  ),
+                ),
+                Text(
+                  " ${dummyPosts[index].username}",
+                  textScaleFactor: 1.2,
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+                Spacer(),
+                Icon(
+                  Icons.more_vert,
+                  color: Colors.black.withOpacity(0.6),
+                )
+              ],
+            ),
+          ),
+
+          /// main content - image
+          Image.asset(
+            dummyPosts[index].image,
+            fit: BoxFit.fitHeight,
+          ),
+
+          /// like,comment,share, ... , save
+          Row(
+            children: [
+              dummyPosts[index].isLiked
+                  ? PostWidgetIcon(
+                      icon: Icons.favorite, color: Colors.red)
+                  : PostWidgetIcon(icon: Icons.favorite_border),
+              PostWidgetIcon(icon: Icons.comment_bank_rounded),
+              RotatedSendMessageIcon(size: 35),
+              Spacer(),
+              PostWidgetIcon(icon: Icons.bookmark_border),
+              Divider(),
+            ],
+          ),
+
+          /// Captions and stuff
+          Container(
+            padding: EdgeInsets.only(left: 12),
+            alignment: Alignment.centerLeft,
+            child: RichText(
+              maxLines: 2,
+              text: TextSpan(
+                style: TextStyle(
+                    color: Colors.black,
+                    overflow: TextOverflow.ellipsis),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: dummyPosts[index].username.toString(),
+                      style: TextStyle(fontWeight: FontWeight.w700)),
+                  TextSpan(text: '   ${dummyPosts[index].caption}'),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Divider(
+            height: 10,
+            thickness: 0.5,
+            color: Colors.black26,
+          )
+        ],
+      ),
+    );
+  }
+}
+
 /// small helper widgets
 class PostWidgetIcon extends StatelessWidget {
   final IconData icon;
   final Color color;
 
   const PostWidgetIcon(
-      {Key? key,
-      required this.icon,
-      this.color = Colors.black})
+      {Key? key, required this.icon, this.color = Colors.black})
       : super(key: key);
 
   @override
@@ -278,15 +261,13 @@ class PostWidgetIcon extends StatelessWidget {
 class RotatedSendMessageIcon extends StatelessWidget {
   final double size;
 
-  const RotatedSendMessageIcon(
-      {Key? key, required this.size})
+  const RotatedSendMessageIcon({Key? key, required this.size})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.only(left: 10, bottom: 10),
+      padding: const EdgeInsets.only(left: 10, bottom: 10),
       child: Transform.rotate(
           angle: 320 * math.pi / 180,
           child: Icon(
@@ -336,14 +317,12 @@ List stories = List<String>.generate(
 
 double falseProbability = .3;
 
-List<PostModel> dummyPosts =
-    List<PostModel>.generate(8, (i) {
+List<PostModel> dummyPosts = List<PostModel>.generate(8, (i) {
   return PostModel(
       usernames[i].toString().toLowerCase(),
       "assets/posts/${i + 1}.png",
       Random().nextDouble() > falseProbability,
-      int.parse(Random().nextInt(500).toString()) +
-          500,
+      int.parse(Random().nextInt(500).toString()) + 500,
       captions[i]);
 });
 
@@ -355,6 +334,6 @@ class PostModel {
   final int likes;
   final String caption;
 
-  PostModel(this.username, this.image, this.isLiked,
-      this.likes, this.caption);
+  PostModel(this.username, this.image, this.isLiked, this.likes,
+      this.caption);
 }
