@@ -7,23 +7,22 @@ class ChatsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding:
-          const EdgeInsets.only(top: 0, bottom: 5),
+      padding: const EdgeInsets.only(top: 0, bottom: 5),
       physics: const BouncingScrollPhysics(),
       children: [
         InkWell(
           onTap: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return const Archived();
             }));
           },
-          child: Padding(
-            padding: const EdgeInsets.only(
-                top: 15, bottom: 10),
+          child:
+
+              /// just include this padding only
+              Padding(
+            padding: const EdgeInsets.only(top: 15, bottom: 10),
             child: Row(
-              crossAxisAlignment:
-                  CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
                 SizedBox(
                   width: 25,
@@ -42,8 +41,7 @@ class ChatsList extends StatelessWidget {
                 Spacer(),
                 Text(
                   "2   ",
-                  style: TextStyle(
-                      color: Color(0XFF075E54)),
+                  style: TextStyle(color: Color(0XFF075E54)),
                 )
               ],
             ),
@@ -51,15 +49,13 @@ class ChatsList extends StatelessWidget {
         ),
         ListView.builder(
             padding: const EdgeInsets.only(top: 0),
-            physics:
-                const NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: dummyChats.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return ListTile(
                 leading: CircleAvatar(
-                  backgroundImage: AssetImage(
-                      dummyChats[index].imagePath),
+                  backgroundImage: AssetImage(dummyChats[index].imagePath),
                 ),
                 title: Row(children: [
                   Text(dummyChats[index].name),
@@ -85,15 +81,12 @@ class ChatsList extends StatelessWidget {
               );
             }),
         Container(
-          padding: const EdgeInsets.only(
-              bottom: 80, top: 15),
+          padding: const EdgeInsets.only(bottom: 80, top: 15),
           alignment: Alignment.center,
-          child: Text(
-              "Tap and hold on a chat for more options",
+          child: Text("Tap and hold on a chat for more options",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color:
-                      Colors.black.withOpacity(0.6)),
+                  color: Colors.black.withOpacity(0.6)),
               textScaleFactor: 0.8),
         ),
       ],
@@ -102,13 +95,9 @@ class ChatsList extends StatelessWidget {
 }
 
 // generating a list of Dummy Chat Models
-List<ChatModel> dummyChats =
-    List<ChatModel>.generate(15, (i) {
+List<ChatModel> dummyChats = List<ChatModel>.generate(15, (i) {
   return ChatModel(
-      names[i],
-      "assets/people/${i + 1}.jfif",
-      "some Last Message",
-      "12:45 PM");
+      names[i], "assets/people/${i + 1}.jfif", "some Last Message", "12:45 PM");
 });
 
 List names = [
@@ -135,6 +124,5 @@ class ChatModel {
   late String lastMessage;
   late String lastMessageTime;
 
-  ChatModel(this.name, this.imagePath,
-      this.lastMessage, this.lastMessageTime);
+  ChatModel(this.name, this.imagePath, this.lastMessage, this.lastMessageTime);
 }

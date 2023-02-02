@@ -11,9 +11,40 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Demo',
-      home: Youtube(),
+      home: Lmao(),
+    );
+  }
+}
+
+class Lmao extends StatelessWidget {
+  const Lmao({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.green,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Expanded(
+                  child: Hero(
+                    tag: 'mac10!',
+                    child: Image.network(
+                      'http://cachemonet.com/src/center/uzi.gif',
+                      scale: 1.6,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
