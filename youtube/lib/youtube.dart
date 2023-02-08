@@ -50,7 +50,8 @@ class Youtube extends StatelessWidget {
                               children: [
                                 ExploreButton(),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Container(
                                     height: 30,
                                     width: 1,
@@ -64,7 +65,8 @@ class Youtube extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               children: topics.map((topic) {
                                 return Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 3),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 3),
                                   child: topic == "All"
                                       ? ActiveChip(
                                           topic: topic,
@@ -108,22 +110,32 @@ class Youtube extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: CircleAvatar(
                               radius: 25,
-                              backgroundImage: AssetImage(videos[index].channelImage),
+                              backgroundImage: AssetImage(
+                                  videos[index].channelImage),
                             ),
                           ),
                           Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment:
+                                MainAxisAlignment.start,
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
                             children: [
                               TitleText(
                                 videoTitle: videos[index].videoTitle,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.start,
                                 children: [
-                                  SubtitleText(subtitleText: videos[index].channelName),
-                                  SubtitleText(subtitleText: videos[index].views),
-                                  SubtitleText(subtitleText: videos[index].date),
+                                  SubtitleText(
+                                      subtitleText:
+                                          videos[index].channelName),
+                                  SubtitleText(
+                                      subtitleText:
+                                          videos[index].views),
+                                  SubtitleText(
+                                      subtitleText:
+                                          videos[index].date),
                                 ],
                               )
                             ],
@@ -234,7 +246,8 @@ class ActiveChip extends StatelessWidget {
       label: Text(
         topic,
         textScaleFactor: 1.1,
-        style: TextStyle(fontWeight: FontWeight.w400, color: Colors.white),
+        style: TextStyle(
+            fontWeight: FontWeight.w400, color: Colors.white),
       ),
     );
   }
@@ -379,7 +392,8 @@ List<Video> videos = [
   Video(
       channelName: "Oggy Hindi - हिन्दी",
       channelImage: "assets/dummy_data/channels/3.jpg",
-      videoTitle: "Oggy and the Cockroaches 🔧 KEYS & IDEAS 🔧 Hindi Cartoons for Kids",
+      videoTitle:
+          "Oggy and the Cockroaches 🔧 KEYS & IDEAS 🔧 Hindi Cartoons for Kids",
       videoThumbnail: "assets/dummy_data/thumbs/3.jpg",
       date: "1 year ago",
       views: "54M views"),
@@ -401,7 +415,8 @@ List<Video> videos = [
   Video(
       channelName: "WWE",
       channelImage: "assets/dummy_data/channels/6.jpg",
-      videoTitle: "FULL MATCH – Royal Rumble Match: Royal Rumble 2015",
+      videoTitle:
+          "FULL MATCH – Royal Rumble Match: Royal Rumble 2015",
       videoThumbnail: "assets/dummy_data/thumbs/6.jpg",
       date: "8 days ago",
       views: "3.6M views"),
