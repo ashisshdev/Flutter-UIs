@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:headphone_app/animated_product_page_advance.dart';
-import 'animated_index_shop.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,9 +17,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-//      home: const AnimatedProductPageAdvance(),
-      home: const AnimatedProductPage(),
-
+      home: const AnimatedProductPageAdvance(),
+      // home: const AnimatedProductPage(),
     );
   }
 }

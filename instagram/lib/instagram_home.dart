@@ -58,7 +58,7 @@ class InstagramHome extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         children: [
           Container(
-            margin: EdgeInsets.symmetric(vertical: 5),
+            margin: EdgeInsets.only(top: 10),
             padding: EdgeInsets.all(1),
             height: 98,
             child: ListView.builder(
@@ -73,8 +73,9 @@ class InstagramHome extends StatelessWidget {
                 }),
           ),
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(4),
             child: ListView.builder(
+                padding: EdgeInsets.only(top: 0),
                 // both physics works
                 // physics: NeverScrollableScrollPhysics(),
                 physics: ClampingScrollPhysics(),
