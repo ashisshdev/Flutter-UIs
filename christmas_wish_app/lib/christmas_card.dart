@@ -18,7 +18,8 @@ class AnimatedBackground extends StatefulWidget {
   const AnimatedBackground({super.key, required this.child});
 
   @override
-  State<AnimatedBackground> createState() => _AnimatedBackgroundState();
+  State<AnimatedBackground> createState() =>
+      _AnimatedBackgroundState();
 }
 
 class _AnimatedBackgroundState extends State<AnimatedBackground> {
@@ -29,7 +30,10 @@ class _AnimatedBackgroundState extends State<AnimatedBackground> {
     const Color(0xff050340),
     const Color(0xff2C0340),
   ];
-  List<Alignment> alignmentList = [Alignment.topCenter, Alignment.bottomCenter];
+  List<Alignment> alignmentList = [
+    Alignment.topCenter,
+    Alignment.bottomCenter
+  ];
   int index = 0;
   Color bottomColor = const Color(0xff092646);
   Color topColor = const Color(0xff410D75);
@@ -76,7 +80,8 @@ class _AnimatedBackgroundState extends State<AnimatedBackground> {
   }
 }
 
-class _ChristmasCardState extends State<ChristmasCard> with TickerProviderStateMixin {
+class _ChristmasCardState extends State<ChristmasCard>
+    with TickerProviderStateMixin {
   final controller = FlipCardController();
   bool flipRight = false;
 
@@ -99,7 +104,9 @@ class _ChristmasCardState extends State<ChristmasCard> with TickerProviderStateM
                     backWidget: const CardBack(),
                     controller: controller,
                     onTapFlipping: true,
-                    rotateSide: flipRight ? RotateSide.left : RotateSide.right),
+                    rotateSide: flipRight
+                        ? RotateSide.left
+                        : RotateSide.right),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: OutlinedButton(
@@ -133,18 +140,31 @@ class CardFront extends StatelessWidget {
       width: 350,
       decoration: BoxDecoration(
           color: Colors.white70,
-          border: Border.all(color: Colors.black26, width: 2, style: BorderStyle.solid),
-          borderRadius: const BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20))),
+          border: Border.all(
+              color: Colors.black26,
+              width: 2,
+              style: BorderStyle.solid),
+          borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(20),
+              bottomRight: Radius.circular(20))),
       child: Stack(
         children: [
           Positioned(
               top: -50,
               right: 0,
-              child: SizedBox(height: 400, width: 300, child: Lottie.asset('assets/lottie_animations/lottie1.json'))),
+              child: SizedBox(
+                  height: 400,
+                  width: 300,
+                  child: Lottie.asset(
+                      'assets/lottie_animations/lottie1.json'))),
           Positioned(
               bottom: -60,
               left: -30,
-              child: SizedBox(height: 380, width: 250, child: Lottie.asset('assets/lottie_animations/lottie3.json')))
+              child: SizedBox(
+                  height: 380,
+                  width: 250,
+                  child: Lottie.asset(
+                      'assets/lottie_animations/lottie3.json')))
         ],
       ),
     );
@@ -163,8 +183,13 @@ class CardBack extends StatelessWidget {
       width: 350,
       decoration: BoxDecoration(
           color: Colors.white70,
-          border: Border.all(color: Colors.black26, width: 2, style: BorderStyle.solid),
-          borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20))),
+          border: Border.all(
+              color: Colors.black26,
+              width: 2,
+              style: BorderStyle.solid),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              bottomLeft: Radius.circular(20))),
       child: Stack(
         children: [
           Positioned(
@@ -181,7 +206,11 @@ class CardBack extends StatelessWidget {
               bottom: -40,
               left: 0,
               right: 0,
-              child: SizedBox(height: 400, width: 400, child: Lottie.asset('assets/lottie_animations/lottie5.json')))
+              child: SizedBox(
+                  height: 400,
+                  width: 400,
+                  child: Lottie.asset(
+                      'assets/lottie_animations/lottie5.json')))
         ],
       ),
     );

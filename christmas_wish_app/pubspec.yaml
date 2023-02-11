@@ -29,7 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_flip_card: ^0.0.3
+  flutter_flip_card: 0.0.3
   lottie: 1.4.2
   google_fonts: 3.0.1
 
