@@ -4,11 +4,11 @@ class AnimatedBoat extends StatefulWidget {
   const AnimatedBoat({Key? key}) : super(key: key);
 
   @override
-  _AnimatedBoatState createState() =>
-      _AnimatedBoatState();
+  AnimatedBoatState createState() =>
+      AnimatedBoatState();
 }
 
-class _AnimatedBoatState extends State<AnimatedBoat>
+class AnimatedBoatState extends State<AnimatedBoat>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _animation;

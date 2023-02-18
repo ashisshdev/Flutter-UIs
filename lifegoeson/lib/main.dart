@@ -38,8 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 1),
-        (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         currentColor == 3
             ? currentColor = 0
@@ -68,12 +67,10 @@ class ImageSequence extends StatefulWidget {
   const ImageSequence({Key? key}) : super(key: key);
 
   @override
-  _ImageSequenceState createState() =>
-      _ImageSequenceState();
+  ImageSequenceState createState() => ImageSequenceState();
 }
 
-class _ImageSequenceState
-    extends State<ImageSequence> {
+class ImageSequenceState extends State<ImageSequence> {
   List allImages = [];
   int currentImage = 0;
 
@@ -83,13 +80,11 @@ class _ImageSequenceState
 
     if (allImages.isEmpty) {
       for (int i = 0; i < 15; i++) {
-        allImages.add(
-            'assets/duckimages/image${i.toString()}.png');
+        allImages.add('assets/duckimages/image${i.toString()}.png');
       }
     }
 
-    Timer.periodic(const Duration(milliseconds: 70),
-        (timer) {
+    Timer.periodic(const Duration(milliseconds: 70), (timer) {
       setState(() {
         currentImage < 14
             ? currentImage = currentImage + 1

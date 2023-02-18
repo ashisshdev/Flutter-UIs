@@ -244,9 +244,9 @@ class _OrderConfirmScreenState extends State<OrderConfirmScreen> {
                   child: Container(
                       height: 45.0,
                       width: size.width,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: SnkConstants.kPrimaryColor,
-                          borderRadius: const BorderRadius.all(
+                          borderRadius: BorderRadius.all(
                               Radius.circular(10.0))),
                       child: const Center(
                         child: Text("Place order",

@@ -134,7 +134,7 @@ class Travel extends StatelessWidget {
                         children: [
                           OutlinedButton(
                             onPressed: () {},
-                            style: ButtonStyle(),
+                            style: const ButtonStyle(),
                             child: const Text(
                               "LOGIN",
                               textScaleFactor: 1.6,

@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:headphone_app/reuseable_code/widgets.dart';
 
 import 'data.dart';
+import 'reuseable_code/widgets.dart';
 
 class AnimatedProductPageAdvance extends StatefulWidget {
   const AnimatedProductPageAdvance({super.key});

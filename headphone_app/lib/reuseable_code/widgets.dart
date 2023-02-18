@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../data.dart';
+import 'package:headphone_app/data.dart';
 
 PreferredSizeWidget appbar() => AppBar(
       backgroundColor: Colors.transparent,
@@ -147,9 +146,12 @@ class ProductHighlights extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
           "Product highlights : ",
+          textAlign: TextAlign.left,
           textScaleFactor: 1.5,
         ),
         Padding(
