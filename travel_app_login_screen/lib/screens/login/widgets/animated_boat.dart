@@ -41,7 +41,7 @@ class AnimatedBoatState extends State<AnimatedBoat>
     return SlideTransition(
       position: _animation,
       child: Image.asset(
-        'assets/images/sailboat'
+        'assets/images/login/sailboat'
         '.png',
         height: 250,
         width: 150,
