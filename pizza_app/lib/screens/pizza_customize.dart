@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:pizza_app/controller.dart';
+import 'package:provider/provider.dart';
 
 import '../data.dart';
 
@@ -103,12 +105,18 @@ class ChooseSize extends StatelessWidget {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: pizzaSizes
-              .map((e) => Text(
-                    e,
-                    // if e == selectedSize
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 23),
+          children: PizzaSize.values
+              .map((e) => InkWell(
+                    onTap: () {
+                      Provider.of<CustomPizzaController>(context)
+                          .changePizzaSize(newPizzaSize: e);
+                    },
+                    child: Text(
+                      e.toString(),
+                      // if e == selectedSize
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 23),
+                    ),
                   ))
               .toList(),
         ),
@@ -137,10 +145,22 @@ class IngredientsSlide extends StatelessWidget {
           child: Row(
             children: allIngredients
                 .map((e) => Draggable(
-                    feedback: Image.asset(
-                      e.image,
-                      height: 60,
-                      width: 60,
+                    feedback: Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 0.0,
+                              blurRadius: 10.0,
+                              offset: Offset(0.0, 10.0),
+                              color: Colors.black26)
+                        ],
+                      ),
+                      child: Image.asset(
+                        e.image,
+                        height: 60,
+                        width: 60,
+                      ),
                     ),
                     data: e,
                     child: IngredientIcon(e: e)))
@@ -213,10 +233,36 @@ class PizzaDetails extends StatefulWidget {
   State<PizzaDetails> createState() => _PizzaDetailsState();
 }
 
-class _PizzaDetailsState extends State<PizzaDetails> {
+class _PizzaDetailsState extends State<PizzaDetails>
+    with TickerProviderStateMixin {
   List<Ingredient> ingredients = [];
   bool _focused = false;
   int increasedPrice = 0;
+  PizzaSize pizzaSize = PizzaSize.M;
+
+  late AnimationController rotationController;
+
+  void changePizzaSize(PizzaSize newSize) {
+    if (newSize == pizzaSize) {
+      // Do nothing
+    } else {
+      rotationController.forward(from: 0);
+//      triggerRotationAndSizeAnimation();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    rotationController = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 500),
+        lowerBound: 0.0,
+        upperBound: 60.0);
+  }
+
+  // triggerRotationAndSizeAnimation(
+  //     double from, double to, bool clockWise) {}
 
   @override
   Widget build(BuildContext context) {
@@ -260,15 +306,23 @@ class _PizzaDetailsState extends State<PizzaDetails> {
                   duration: const Duration(milliseconds: 200),
                   height: _focused
                       ? constraints.maxHeight
-                      : constraints.maxHeight - 10,
-                  child: Stack(
-                    children: [
-                      Image.asset(pizzaPlate),
-                      Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Image.asset(widget.pizza.image)),
-                    ],
-                  ),
+                      : constraints.maxHeight - 20,
+                  child: AnimatedBuilder(
+                      animation: rotationController,
+                      builder: (context, snapshot) {
+                        return Transform.rotate(
+                          angle: rotationController.value,
+                          child: Stack(
+                            children: [
+                              Image.asset(pizzaPlate),
+                              Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Image.asset(
+                                      widget.pizza.image)),
+                            ],
+                          ),
+                        );
+                      }),
                 );
               });
             },

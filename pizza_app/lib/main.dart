@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pizza_app/controller.dart';
 import 'package:pizza_app/data.dart';
 import 'package:pizza_app/screens/pizza_customize.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,8 +19,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PizzaCustomize(
-        pizza: allPizzas[1],
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<CustomPizzaController>(
+              create: (context) => CustomPizzaController())
+        ],
+        child: PizzaCustomize(
+          pizza: allPizzas[1],
+        ),
       ),
     );
   }
