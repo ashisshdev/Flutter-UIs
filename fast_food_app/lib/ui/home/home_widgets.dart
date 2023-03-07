@@ -83,8 +83,8 @@ class TabIcon extends StatelessWidget {
   }
 }
 
-class FloatingCart extends StatelessWidget {
-  const FloatingCart({super.key});
+class ViewCart extends StatelessWidget {
+  const ViewCart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +108,7 @@ class FloatingCart extends StatelessWidget {
               Text('2 Items | \$45',
                   textScaleFactor: 1.4,
                   style: TextStyle(fontWeight: FontWeight.w800)),
-              Text("*Delvery charges not included."),
+              Text("+ Delvery charges."),
             ],
           ),
           const Text(

@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage>
               Positioned.fill(
                   bottom: 5,
                   top: MediaQuery.of(context).size.height * 0.78,
-                  child: const FloatingCart())
+                  child: const ViewCart())
             ],
           )),
     );

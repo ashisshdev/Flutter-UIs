@@ -1,7 +1,8 @@
 import 'package:fast_food_app/data/dummy_data.dart';
+import 'package:fast_food_app/ui/home/tabs/donut/view_donut_page.dart';
 import 'package:flutter/material.dart';
 
-import 'donut_widgets.dart';
+import 'donut_tab_widgets.dart';
 
 class DonutTab extends StatefulWidget {
   const DonutTab({super.key});
