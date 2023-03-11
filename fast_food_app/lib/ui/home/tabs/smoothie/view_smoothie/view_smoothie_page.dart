@@ -1,13 +1,14 @@
 import 'package:fast_food_app/data/dummy_data.dart';
+import 'package:fast_food_app/models/smoothie.dart';
+import 'package:fast_food_app/ui/home/tabs/common_widgets_in_tabs.dart';
 import 'package:flutter/material.dart';
 
-class DonutPage extends StatelessWidget {
-  final Donut donut;
+import 'view_smoothie_page_widgets.dart';
 
-  const DonutPage({
-    Key? key,
-    required this.donut,
-  }) : super(key: key);
+class SmoothiePage extends StatelessWidget {
+  final Smoothie smoothie;
+
+  const SmoothiePage({super.key, required this.smoothie});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class DonutPage extends StatelessWidget {
           color: Colors.black,
         ),
         title: Text(
-          donut.name,
+          smoothie.name,
           textScaleFactor: 1.2,
           style: const TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold),
@@ -32,7 +33,7 @@ class DonutPage extends StatelessWidget {
         elevation: 0,
       ),
       body: Container(
-        color: donut.color.withOpacity(0.2),
+        color: smoothie.color.withOpacity(0.2),
         child: Stack(
           children: [
             Positioned.fill(
@@ -41,20 +42,14 @@ class DonutPage extends StatelessWidget {
                 shrinkWrap: true,
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height:
-                        MediaQuery.of(context).size.width * 0.8,
-                    child: Hero(
-                      tag: donut.image,
-                      child: Container(
-                        margin: const EdgeInsets.all(30),
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(donut.image),
-                                fit: BoxFit.contain)),
-                      ),
-                    ),
-                  ),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width *
+                          0.8,
+                      child: ImageSizeWidget(
+                        image: smoothie.image,
+                        color: smoothie.color,
+                        message: smoothie.message,
+                      )),
                   Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -71,7 +66,7 @@ class DonutPage extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20.0, horizontal: 20),
                             child: Text(
-                              donutDetail,
+                              smoothieDetail,
                               textScaleFactor: 1.4,
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
@@ -102,7 +97,7 @@ class DonutPage extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 return NutrientTile(
-                                    color: donut.color,
+                                    color: smoothie.color,
                                     nutrient: nutrients[index]);
                               },
                             ),
@@ -134,9 +129,10 @@ class DonutPage extends StatelessWidget {
                                 children: ingredients
                                     .map((e) => Chip(
                                           label: Text(e),
-                                          backgroundColor: donut
-                                              .color
-                                              .withOpacity(0.1),
+                                          backgroundColor:
+                                              smoothie.color
+                                                  .withOpacity(
+                                                      0.1),
                                         ))
                                     .toList(),
                               ),
@@ -156,125 +152,9 @@ class DonutPage extends StatelessWidget {
             Positioned.fill(
                 bottom: 5,
                 top: MediaQuery.of(context).size.height * 0.89,
-                child: AddToCart(donut: donut)),
+                child: ItemAddToCart(price: smoothie.price)),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class NutrientTile extends StatelessWidget {
-  final Color color;
-  final Nutrient nutrient;
-
-  const NutrientTile({
-    Key? key,
-    required this.color,
-    required this.nutrient,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      height: 140,
-      width: 75,
-      decoration: BoxDecoration(
-          borderRadius:
-              const BorderRadius.all(Radius.circular(40)),
-          border: Border.all(color: Colors.black, width: 2)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            nutrient.name,
-            textScaleFactor: 1.3,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text(
-            nutrient.value,
-            textScaleFactor: 0.8,
-            style: const TextStyle(color: Colors.black54),
-          ),
-          CircleAvatar(
-            radius: 26,
-            backgroundColor: color.withOpacity(0.2),
-            child: Text(
-              "${nutrient.percentage.toStringAsFixed(0)}%",
-              textScaleFactor: 1.1,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-String donutDetail =
-    "The Sweet And Subtle Salty Combo of Chocolate Meets Caramel. Introduce the Caramel Duo To Your Mouth!";
-
-class Nutrient {
-  final String value;
-  final double percentage;
-  final String name;
-
-  Nutrient(
-      {required this.value,
-      required this.percentage,
-      required this.name});
-}
-
-class AddToCart extends StatelessWidget {
-  final Donut donut;
-
-  const AddToCart({
-    Key? key,
-    required this.donut,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
-          ),
-          border: Border.all(color: Colors.black54, width: 3)),
-      padding: const EdgeInsets.symmetric(
-          vertical: 12, horizontal: 22),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("\$${donut.price.toString()}",
-                  textScaleFactor: 1.4,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w800)),
-              const Text("*Delvery not included."),
-            ],
-          ),
-          const Text(
-            "Add to Cart",
-            textScaleFactor: 1.3,
-            style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontWeight: FontWeight.w900),
-          ),
-        ],
       ),
     );
   }

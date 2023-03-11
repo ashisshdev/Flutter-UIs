@@ -54,7 +54,7 @@ class InstagramHome extends StatelessWidget {
         ],
       ),
       body: ListView(
-        // or a Column inside a SingleChildScrollView will do the job
+        // or a Column inside a SingleChildScrollView will do similar job
         physics: BouncingScrollPhysics(),
         children: [
           Container(

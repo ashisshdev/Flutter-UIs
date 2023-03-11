@@ -1,7 +1,7 @@
-import 'package:fast_food_app/data/dummy_data.dart';
+import 'package:fast_food_app/models/donut.dart';
 import 'package:flutter/material.dart';
 
-import 'view_donut_page.dart';
+import '../view_donut_page/view_donut_page.dart';
 
 class DonutCard extends StatelessWidget {
   final Donut donut;
@@ -37,7 +37,8 @@ class DonutCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: donut.color.withOpacity(0.3),
                       borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(borderRadius),
+                        bottomLeft:
+                            Radius.circular(borderRadius),
                         topRight: Radius.circular(borderRadius),
                       ),
                     ),
@@ -80,7 +81,8 @@ class DonutCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(
                     horizontal: 12, vertical: 5),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
                   children: const [
                     // love icon
                     Icon(

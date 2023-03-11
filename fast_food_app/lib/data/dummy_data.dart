@@ -1,4 +1,8 @@
-import 'package:fast_food_app/ui/home/tabs/donut/view_donut_page.dart';
+import 'dart:math';
+
+import 'package:fast_food_app/models/donut.dart';
+import 'package:fast_food_app/models/nutrient.dart';
+import 'package:fast_food_app/models/smoothie.dart';
 import 'package:fast_food_app/utils/assets.dart';
 import 'package:flutter/material.dart';
 
@@ -29,77 +33,53 @@ List<TabBarItem> tabBarItems = [
   TabBarItem(
       name: "Pizzas",
       image: AppAssets.homePageAssets.homepageTabIconPizza),
-  TabBarItem(
-      name: "Burgers",
-      image: AppAssets.homePageAssets.homepageTabIconBurger),
-  TabBarItem(
-      name: "Smoothies",
-      image: AppAssets.homePageAssets.homepageTabIconSmoothie),
 ];
 
 /// Donut Tab
 
-class Donut {
-  String name;
-  int price;
-  Color color;
-  String image;
-
-  Donut({
-    required this.name,
-    required this.price,
-    required this.color,
-    required this.image,
-  });
-}
-
-List<Donut> donuts = [
-  Donut(
-      name: "Raspberry Vanila",
-      price: 23,
-      color: Colors.purple,
-      image: AppAssets.donutAssets.donutRaspberryVanilla),
-  Donut(
-      name: "Classic Sprinkle",
-      price: 27,
-      color: Colors.blue,
-      image: AppAssets.donutAssets.donutClassicSprinkle),
-  Donut(
-      name: "Strawberry Lemon",
-      price: 30,
-      color: Colors.red,
-      image: AppAssets.donutAssets.donutStrawberryLemon),
-  Donut(
-      name: "Choco-Coco Tap",
-      price: 33,
-      color: Colors.teal,
-      image: AppAssets.donutAssets.donutChocoCocoTap),
-  Donut(
-      name: "Chocolate Cherry",
-      price: 34,
-      color: Colors.green,
-      image: AppAssets.donutAssets.donutChocolateCherry),
-  Donut(
-      name: "Choco Glaze",
-      price: 39,
-      color: Colors.blue,
-      image: AppAssets.donutAssets.donutChochGlaze),
-  Donut(
-      name: "Strawberry Wheel",
-      price: 42,
-      color: Colors.orange,
-      image: AppAssets.donutAssets.donutStrawberryWheel),
+List<String> donutNames = [
+  "Raspberry Vanila",
+  "Classic Sprinkle",
+  "Strawberry Lemon",
+  "Choco-Coco Tap",
+  "Chocolate Cherry",
+  "Choco Glaze",
+  "Strawberry Wheel",
+];
+List<Color> donutColors = [
+  Colors.purple,
+  Colors.blue,
+  Colors.red,
+  Colors.teal,
+  Colors.green,
+  Colors.blue,
+  Colors.orange
 ];
 
-List<Nutrient> nutrients = [
-  Nutrient(value: "20 Gram", percentage: 2, name: "Sugar"),
-  Nutrient(value: "4 Gram", percentage: .3, name: "Salt"),
-  Nutrient(value: "31 Gram", percentage: 40, name: "Carbs"),
-  Nutrient(value: "8 Gram", percentage: 12, name: "Fat"),
-  Nutrient(value: "5 Gram", percentage: 2, name: "Protein"),
-  Nutrient(value: "140 Kcal", percentage: 40, name: "Energy"),
+List<String> donutImages = [
+  AppAssets.donutAssets.donutRaspberryVanilla,
+  AppAssets.donutAssets.donutClassicSprinkle,
+  AppAssets.donutAssets.donutStrawberryLemon,
+  AppAssets.donutAssets.donutChocoCocoTap,
+  AppAssets.donutAssets.donutChocolateCherry,
+  AppAssets.donutAssets.donutChochGlaze,
+  AppAssets.donutAssets.donutStrawberryWheel
 ];
 
+int randomDonutPrice() => Random().nextInt(10) + 5;
+
+List<Donut> donuts = List.generate(
+    7,
+    (index) => Donut(
+        name: donutNames[index],
+        price: randomDonutPrice(),
+        color: donutColors[index],
+        image: donutImages[index]));
+
+String donutDetail =
+    "The Sweet And Subtle Salty Combo of Chocolate Meets Caramel. Introduce the Caramel Duo To Your Mouth!";
+
+/// Donut Ingredients
 List<String> ingredients = [
   "Flour",
   "Sugar",
@@ -114,4 +94,86 @@ List<String> ingredients = [
   "Vanila Extract",
   "Nutmeg",
   "Vegetable Oil",
+];
+
+/// Smoothies tab
+
+// List<String> oldSmoothieNames = [
+//   "Sweet Strawberry",
+//   "Leafy Berries",
+//   "Cleansing Green",
+//   "Banana Bonus",
+//   "Choco Berry",
+//   "Mango Melon",
+//   "Non-Stop Apricot",
+//   "Cute Cherry"
+// ];
+
+List<String> smoothieNames = [
+  "Sweet Strawberry",
+  "Bohemian Raspberry",
+  "Cleansing Green",
+  "Hakuna Banana",
+  "Berry Christmas",
+  "Mango Melon",
+  "Peach, Please",
+  "Cute Cherry"
+];
+
+List<Color> smoothieColors = [
+  Colors.pink,
+  Colors.purple,
+  Colors.green,
+  Colors.yellow,
+  Colors.brown,
+  Colors.orange,
+  Colors.yellow,
+  Colors.red
+];
+
+List<String> smoothieImages = [
+  AppAssets.smoothieAssets.smoothieSweetStrawberry,
+  AppAssets.smoothieAssets.smoothieLeafyBerries,
+  AppAssets.smoothieAssets.smoothieCleansingGreen,
+  AppAssets.smoothieAssets.smoothieBananaBonus,
+  AppAssets.smoothieAssets.smoothieChocoBerry,
+  AppAssets.smoothieAssets.smoothieMangoMelon,
+  AppAssets.smoothieAssets.smoothieNonStopApricot,
+  AppAssets.smoothieAssets.smoothieCuteCherry,
+];
+
+List<String> smoothieMessages = [
+  "Sweet &\nBright",
+  "Cold &\nNatural",
+  "Tangy &\nHealthy",
+  "Yellow &\nSweet",
+  "Sweet &\nCute",
+  "Strange &\nHealthy",
+  "Fun &\nNatural",
+  "Cute &\nTasty",
+];
+
+int randomSmoothiePrice() => Random().nextInt(5) + 10;
+
+List<Smoothie> smoothies = List.generate(
+    7,
+    (index) => Smoothie(
+        name: smoothieNames[index],
+        price: randomSmoothiePrice(),
+        color: smoothieColors[index],
+        image: smoothieImages[index],
+        message: smoothieMessages[index]));
+
+String smoothieDetail =
+    "The Sweet And Subtle Salty Combo of Chocolate Meets Caramel. Cold, Creamy and so thick that your straw stands straight up, and filled with juicy berries!";
+
+/// All Tabs common
+
+List<Nutrient> nutrients = [
+  Nutrient(value: "20 Gram", percentage: 2, name: "Sugar"),
+  Nutrient(value: "4 Gram", percentage: .3, name: "Salt"),
+  Nutrient(value: "31 Gram", percentage: 40, name: "Carbs"),
+  Nutrient(value: "8 Gram", percentage: 12, name: "Fat"),
+  Nutrient(value: "5 Gram", percentage: 2, name: "Protein"),
+  Nutrient(value: "140 Kcal", percentage: 40, name: "Energy"),
 ];

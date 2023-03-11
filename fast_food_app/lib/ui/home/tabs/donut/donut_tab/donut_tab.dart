@@ -1,5 +1,4 @@
 import 'package:fast_food_app/data/dummy_data.dart';
-import 'package:fast_food_app/ui/home/tabs/donut/view_donut_page.dart';
 import 'package:flutter/material.dart';
 
 import 'donut_tab_widgets.dart';
@@ -20,6 +19,7 @@ class _DonutTabState extends State<DonutTab>
   Widget build(BuildContext context) {
     super.build(context);
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
           child: GridView.builder(
