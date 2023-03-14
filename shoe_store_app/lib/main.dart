@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           elevation: 0,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor:
+              Theme.of(context).scaffoldBackgroundColor,
         ),
       ),
       home: const ItemDetailScreen(),
