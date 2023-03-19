@@ -12,8 +12,10 @@ class HomePageTopText extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SizedBox(
       child: Text(
-        "What you would like \nto find?",
-        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+        "What you would like to find?",
+        maxLines: 2,
+        style:
+            TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -31,7 +33,8 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, right: 15, bottom: 15),
+      padding:
+          const EdgeInsets.only(top: 5, right: 15, bottom: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -112,13 +115,18 @@ class DestinationCardTile extends StatelessWidget {
                 borderRadius:
                     const BorderRadius.all(Radius.circular(20))),
             child: Container(
-              padding: const EdgeInsets.only(left: 10, bottom: 9),
+              padding:
+                  const EdgeInsets.only(left: 10, bottom: 9),
               decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(20)),
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.transparent, Colors.black])),
+                      colors: [
+                        Colors.transparent,
+                        Colors.black
+                      ])),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,7 +208,8 @@ class ScrollingHotelsCards extends StatefulWidget {
       _ScrollingHotelCardsState();
 }
 
-class _ScrollingHotelCardsState extends State<ScrollingHotelsCards> {
+class _ScrollingHotelCardsState
+    extends State<ScrollingHotelsCards> {
   late PageController pageController;
   bool pageHaveDimentions = false;
 
@@ -241,8 +250,8 @@ class _ScrollingHotelCardsState extends State<ScrollingHotelsCards> {
                       builder: (context, _) {
                         return HotelCard(
                           hotel: hotel,
-                          xFactor:
-                              -pageController.page!.abs() + index,
+                          xFactor: -pageController.page!.abs() +
+                              index,
                         );
                       },
                     )
@@ -280,7 +289,8 @@ class HotelCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        borderRadius:
+            const BorderRadius.all(Radius.circular(20)),
         image: DecorationImage(
             image: AssetImage(
               hotel.imageUrl,
@@ -337,26 +347,3 @@ class HotelCard extends StatelessWidget {
     );
   }
 }
-
-
-///
-/// More to implement
-///
-
-// class ActivityCard extends StatelessWidget {
-//   const ActivityCard({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Placeholder();
-//   }
-// }
-
-// class SightCard extends StatelessWidget {
-//   const SightCard({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Placeholder();
-//   }
-// }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_store_app/screens/item_detail_screen.dart';
+import 'package:shoe_store_app/screens/onboarding_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
               Theme.of(context).scaffoldBackgroundColor,
         ),
       ),
-      home: const ItemDetailScreen(),
+      home: const OnboardingScreen(),
     );
   }
 }

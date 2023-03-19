@@ -4,17 +4,19 @@
 Inspiration
 https://dribbble.com/shots/19649140-App-UI  
 
-A new Flutter project.
 
-## Getting Started
+Integrate this icons in smoothies section 
+https://dribbble.com/shots/7749297-Smoothie-recipe-app/attachments/442145?mode=media 
 
-This project is a starting point for a Flutter application.
+useful resource when i;ll make smoothies customzation option 
+https://dribbble.com/shots/5410284-Smoothie-Land/attachments/5410284?mode=media
+https://www.blendtopia.com/blogs/wellness/what-is-the-best-milk-for-smoothies
+https://worldofblenders.com/best-milk-for-smoothies/
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+add this in burger customization 
+https://www.instagram.com/p/CpLRl9ujoYG/ 
+https://github.com/abdo1200/flutter_collection 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
