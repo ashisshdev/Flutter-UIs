@@ -64,6 +64,7 @@ flutter:
     - assets/
     - assets/fonts/
     - assets/images/
+    - assets/images/extra_ingredients/
     - assets/images/coffee/
     - assets/images/coffee_shops/
     - assets/images/people/

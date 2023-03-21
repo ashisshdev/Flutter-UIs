@@ -26,7 +26,12 @@ List<String> coffeeImages = [
   AppAssets.homePageAssets.homeCoffeeTwoCup,
   AppAssets.homePageAssets.homeCoffeeNcup,
 ];
-List<String> coffeeNames = ["Caffe Misto", 'Caffe Latte', "Caffe Misto", 'Caffe Latte'];
+List<String> coffeeNames = [
+  "Caffe Misto",
+  'Caffe Latte',
+  "Caramel Macchiato",
+  'Caffe Latte'
+];
 List<String> coffeeShopNames = [
   "Starbucks",
   "BrownHouse",
@@ -108,3 +113,20 @@ List<Ingredient> coffeeIngredients = List.generate(
           color: colors[index],
         ),
     growable: false);
+
+class Nutrition {
+  String name;
+  String amount;
+  Nutrition({
+    required this.name,
+    required this.amount,
+  });
+}
+
+List<Nutrition> nutritions = [
+  Nutrition(name: "Calories", amount: "250g"),
+  Nutrition(name: "Protein", amount: "10g"),
+  Nutrition(name: "Caffeine", amount: "150g"),
+  Nutrition(name: "Fat", amount: "4g"),
+  Nutrition(name: "Sugar", amount: "24g"),
+];
