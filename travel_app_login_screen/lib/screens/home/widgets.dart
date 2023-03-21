@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:travel_app_login_screen/dummy_data/data.dart';
 import 'package:travel_app_login_screen/models/destination.dart';
 import 'package:travel_app_login_screen/models/hotel.dart';
 
@@ -14,8 +15,7 @@ class HomePageTopText extends StatelessWidget {
       child: Text(
         "What you would like to find?",
         maxLines: 2,
-        style:
-            TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -33,15 +33,13 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.only(top: 5, right: 15, bottom: 15),
+      padding: const EdgeInsets.only(top: 5, right: 15, bottom: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,
-            style: const TextStyle(
-                fontSize: 23, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
           ),
           const Text(
             "See All",
@@ -54,11 +52,109 @@ class SectionTitle extends StatelessWidget {
   }
 }
 
+
+class ScrollingTopDestinations extends StatefulWidget {
+  const ScrollingTopDestinations({super.key});
+
+  @override
+  ScrollingTopDestinationsState createState() => ScrollingTopDestinationsState();
+}
+
+class ScrollingTopDestinationsState extends State<ScrollingTopDestinations> {
+  final List<Destination> _list = topDestinations;
+
+  late PageController pageController;
+
+  double viewportFraction = 0.95;
+  double pageOffset = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController(initialPage: 0, viewportFraction: viewportFraction)
+      ..addListener(() {
+        setState(() {
+          pageOffset = pageController.page!;
+        });
+      });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PageView.builder(
+      physics: const BouncingScrollPhysics(),
+      controller: pageController,
+      itemCount: _list.length,
+      itemBuilder: (context, index) {
+        // to scale the image in forcus and downscale others
+        // double scale =
+        //     max(viewportFraction, (1 - (pageOffset - index).abs()) + viewportFraction);
+
+        double angle = (pageOffset - index).abs();
+
+        if (angle > 0.5) {
+          angle = 1 - angle;
+        }
+        return Container(
+          padding: const EdgeInsets.only(
+            right: 10,
+            top: 10,
+            // top: 100 - scale * 25,
+            bottom: 10,
+          ),
+          child: Transform(
+            transform: Matrix4.identity()
+              ..setEntry(
+                3,
+                2,
+                0.001,
+              )
+              ..rotateY(angle),
+            alignment: Alignment.center,
+            child: Stack(
+              children: <Widget>[
+                Positioned.fill(
+                  child: Image.asset(
+                    _list[index].imageUrl,
+                    width: MediaQuery.of(context).size.width,
+                    // for parallax, image fir should be BoxFit.none and images should be wide
+                    fit: BoxFit.cover,
+                    //alignemnt for parallax effect
+                    alignment: Alignment((pageOffset - index).abs() * 0.5, 0),
+                  ),
+                ),
+                Positioned(
+                  bottom: 30,
+                  left: 20,
+                  child: AnimatedOpacity(
+                    opacity: angle == 0 ? 1 : 0,
+                    duration: const Duration(
+                      milliseconds: 100,
+                    ),
+                    child: Text(
+                      _list[index].country,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 // For Top Destinations
 class ScrollingDestinationCards extends StatelessWidget {
   final List<Destination> destinationsList;
-  const ScrollingDestinationCards(
-      {super.key, required this.destinationsList});
+  const ScrollingDestinationCards({super.key, required this.destinationsList});
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +167,12 @@ class ScrollingDestinationCards extends StatelessWidget {
           return Card(
             shadowColor: Colors.black45,
             shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(20)), //<--custom shape
+                borderRadius: BorderRadius.circular(20)), //<--custom shape
 
             elevation: 2,
             child: SizedBox(
               width: 200,
-              child: DestinationCardTile(
-                  destination: destinationsList[index]),
+              child: DestinationCardTile(destination: destinationsList[index]),
             ),
           );
         });
@@ -110,23 +204,16 @@ class DestinationCardTile extends StatelessWidget {
             padding: const EdgeInsets.only(top: 150),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(destination.imageUrl),
-                    fit: BoxFit.cover),
-                borderRadius:
-                    const BorderRadius.all(Radius.circular(20))),
+                    image: AssetImage(destination.imageUrl), fit: BoxFit.cover),
+                borderRadius: const BorderRadius.all(Radius.circular(20))),
             child: Container(
-              padding:
-                  const EdgeInsets.only(left: 10, bottom: 9),
+              padding: const EdgeInsets.only(left: 10, bottom: 9),
               decoration: const BoxDecoration(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(20)),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black
-                      ])),
+                      colors: [Colors.transparent, Colors.black])),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,9 +221,7 @@ class DestinationCardTile extends StatelessWidget {
                   Text(
                     destination.city,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white),
+                        fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -148,8 +233,7 @@ class DestinationCardTile extends StatelessWidget {
                       ),
                       Text(
                         "  ${destination.country}",
-                        style: const TextStyle(
-                            fontSize: 15, color: Colors.white70),
+                        style: const TextStyle(fontSize: 15, color: Colors.white70),
                       ),
                     ],
                   )
@@ -204,12 +288,10 @@ class ScrollingHotelsCards extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ScrollingHotelsCards> createState() =>
-      _ScrollingHotelCardsState();
+  State<ScrollingHotelsCards> createState() => _ScrollingHotelCardsState();
 }
 
-class _ScrollingHotelCardsState
-    extends State<ScrollingHotelsCards> {
+class _ScrollingHotelCardsState extends State<ScrollingHotelsCards> {
   late PageController pageController;
   bool pageHaveDimentions = false;
 
@@ -250,8 +332,7 @@ class _ScrollingHotelCardsState
                       builder: (context, _) {
                         return HotelCard(
                           hotel: hotel,
-                          xFactor: -pageController.page!.abs() +
-                              index,
+                          xFactor: -pageController.page!.abs() + index,
                         );
                       },
                     )
@@ -289,8 +370,7 @@ class HotelCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius:
-            const BorderRadius.all(Radius.circular(20)),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
         image: DecorationImage(
             image: AssetImage(
               hotel.imageUrl,
@@ -304,8 +384,7 @@ class HotelCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20)),
+                bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -321,25 +400,19 @@ class HotelCard extends StatelessWidget {
                 Text(
                   hotel.name,
                   style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold),
+                      color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   hotel.address,
                   style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500),
+                      color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),
                 ),
               ],
             ),
             Text(
               "\$${hotel.price}",
               style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600),
+                  color: Colors.white, fontSize: 25, fontWeight: FontWeight.w600),
             )
           ],
         ),

@@ -55,16 +55,14 @@ List<Destination> myDestinations = [
     imageUrl: 'assets/images/home/venice.jpg',
     city: 'Venice',
     country: 'Italy',
-    description:
-        'Visit Venice for an amazing and unforgettable adventure.',
+    description: 'Visit Venice for an amazing and unforgettable adventure.',
     activities: myActivities,
   ),
   Destination(
     imageUrl: 'assets/images/home/paris.jpg',
     city: 'Paris',
     country: 'France',
-    description:
-        'Visit Paris for an amazing and unforgettable adventure.',
+    description: 'Visit Paris for an amazing and unforgettable adventure.',
     activities: myActivities,
   ),
   Destination(
@@ -79,16 +77,47 @@ List<Destination> myDestinations = [
     imageUrl: 'assets/images/home/saopaulo.jpg',
     city: 'Sao Paulo',
     country: 'Brazil',
-    description:
-        'Visit Sao Paulo for an amazing and unforgettable adventure.',
+    description: 'Visit Sao Paulo for an amazing and unforgettable adventure.',
     activities: myActivities,
   ),
   Destination(
     imageUrl: 'assets/images/home/newyork.jpg',
     city: 'New York City',
     country: 'United States',
-    description:
-        'Visit New York for an amazing and unforgettable adventure.',
+    description: 'Visit New York for an amazing and unforgettable adventure.',
     activities: myActivities,
   ),
+];
+
+List<Destination> topDestinations = [
+  Destination(
+      imageUrl: "assets/images/home/top_destinations/japan.jpg",
+      city: "Kyoto",
+      country: "Japan",
+      description: "description",
+      activities: []),
+        Destination(
+      imageUrl: "assets/images/home/top_destinations/italy.jpg",
+      city: "Rome",
+      country: "Italy",
+      description: "description",
+      activities: []),
+        Destination(
+      imageUrl: "assets/images/home/top_destinations/london.jpg",
+      city: "London",
+      country: "England",
+      description: "description",
+      activities: []),
+        Destination(
+      imageUrl: "assets/images/home/top_destinations/paris.jpg",
+      city: "paris",
+      country: "France",
+      description: "description",
+      activities: []),
+        Destination(
+      imageUrl: "assets/images/home/top_destinations/china.jpg",
+      city: "Beijing",
+      country: "China",
+      description: "description",
+      activities: []),
 ];

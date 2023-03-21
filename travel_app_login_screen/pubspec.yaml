@@ -62,6 +62,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/home/
+    - assets/images/home/top_destinations/
     - assets/images/login/
 
   #   - images/a_dot_ham.jpeg

@@ -11,3 +11,4 @@ class Hotel {
     required this.price,
   });
 }
+
