@@ -1,150 +1,224 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:yatch_booking_app/data/dummy_data.dart';
 import 'package:yatch_booking_app/models/boat_model.dart';
 import 'package:yatch_booking_app/ui/details/detail_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class BoatListPage extends StatefulWidget {
+  const BoatListPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  BoatListPageState createState() => BoatListPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final _pageController = PageController();
-  double page = 0.0;
+class BoatListPageState extends State<BoatListPage> {
+  late PageController _pageController;
+  late ValueNotifier<double> _pageNotifier;
+  late ValueNotifier<bool> _hideAppBarNotifier;
 
   @override
   void initState() {
-    _pageController.addListener(_listenScroll);
+    _pageController = PageController(viewportFraction: .7);
+    _pageController.addListener(_pageListener);
+    _pageNotifier = ValueNotifier(0.0);
+    _hideAppBarNotifier = ValueNotifier(false);
     super.initState();
   }
 
   @override
   void dispose() {
-    _pageController.removeListener(_listenScroll);
+    _pageController.removeListener(_pageListener);
     _pageController.dispose();
     super.dispose();
   }
 
-  void _listenScroll() {
-    setState(() {
-      page = _pageController.page!;
-    });
+  void _pageListener() {
+    _pageNotifier.value = _pageController.page!;
+  }
+
+  //------------------------------------
+  // Open Specs Boat Page
+  //------------------------------------
+  void _openSpecsPage(BuildContext context, Boat boat) async {
+    _hideAppBarNotifier.value = true;
+    await Navigator.push(
+        context,
+        PageRouteBuilder(
+          reverseTransitionDuration: const Duration(milliseconds: 600),
+          transitionDuration: const Duration(milliseconds: 600),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return FadeTransition(
+              opacity: animation,
+              child: BoatSpecsScreen(boat: boat),
+            );
+          },
+        ));
+    _hideAppBarNotifier.value = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
-        body: Container(
-      padding: const EdgeInsets.only(
-        top: 70,
-        left: 20,
-        right: 20,
-      ),
-      child: Stack(
+      body: Column(
         children: [
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 200),
-            top: 0,
-            child: SizedBox(
-              width: size.width,
-              child: const Text(
-                "Boats",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+          //-----------------------------------
+          // Custom App Bar
+          //-----------------------------------
+          SafeArea(
+            child: ValueListenableBuilder<bool>(
+                valueListenable: _hideAppBarNotifier,
+                builder: (context, value, _) {
+                  return _AnimatedCustomAppBar(animate: value);
+                }),
           ),
-          SizedBox(
-            width: size.width,
-            height: size.height - 110,
+          const SizedBox(height: 20),
+          //------------------------------------
+          // Boat Page View
+          //------------------------------------
+          Expanded(
             child: PageView.builder(
-              controller: _pageController,
-              itemCount: boatsData.length,
-              itemBuilder: (BuildContext context, int index) {
-                final percent = (page - index).abs().clamp(0.0, 1.0);
-                final scale = (page - index).abs().clamp(0.0, 0.3);
-
-                final opacity = percent.clamp(0.0, 0.6);
-
-                final boat = boatsData[index];
-
-                return Transform.scale(
-                  scale: 1 - scale,
-                  child: Opacity(
-                    opacity: (1 - opacity),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DetailsPage(boat: boat)));
-                      },
-                      child: boatWidget(
-                        boat: boat,
-                        size: size,
-                        onTap: () => () {},
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
+                controller: _pageController,
+                physics: const BouncingScrollPhysics(),
+                itemCount: boatsData.length,
+                itemBuilder: (context, index) {
+                  final boat = boatsData[index];
+                  return ValueListenableBuilder<double>(
+                      valueListenable: _pageNotifier,
+                      builder: (context, value, _) {
+                        final factorChange = (value - index).abs();
+                        return BoatCard(
+                          boat: boat,
+                          onTapSpec: () => _openSpecsPage(context, boat),
+                          factorChange: factorChange,
+                        );
+                      });
+                }),
           ),
         ],
       ),
-    ));
+    );
   }
+}
 
-  Widget boatWidget({required Boat boat, required Size size, required Function onTap}) {
-    return Container(
-      width: size.width * .8,
-      height: size.height * .8,
-      padding: const EdgeInsets.all(20),
+class BoatCard extends StatelessWidget {
+  const BoatCard({
+    Key? key,
+    required this.boat,
+    required this.factorChange,
+    required this.onTapSpec,
+  }) : super(key: key);
+
+  final Boat boat;
+  final double factorChange;
+  final VoidCallback onTapSpec;
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: (1 - factorChange).clamp(0.0, 1.0),
       child: Column(
         children: [
-          Hero(
-            tag: boat.urlImage,
-            child: Image.asset(
-              boat.urlImage,
-              width: size.width * .35,
-              height: size.height * .6,
-            ),
-          ),
-          Text(
-            boat.title,
-            style: const TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w600,
+          //-----------------------------
+          // Image boat
+          //-----------------------------
+          Expanded(
+            child: Transform.scale(
+              alignment: const Alignment(0, .5),
+              scale: lerpDouble(1.0, 0.7, factorChange)!,
+              child: Hero(
+                tag: boat.title,
+                child: Image.asset(boat.urlImage),
+              ),
             ),
           ),
           const SizedBox(height: 10),
           Text(
-            "By ${boat.by}",
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w300,
+            boat.title,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          //------------------------------
+          // Owner boat
+          //------------------------------
+          Text.rich(
+            TextSpan(
+              text: 'By ',
+              children: [
+                TextSpan(
+                  text: boat.by,
+                  style: TextStyle(
+                    color: Colors.grey[900],
+                  ),
+                ),
+              ],
+              style: TextStyle(color: Colors.grey[600], height: 1),
             ),
           ),
-          const SizedBox(height: 20),
-          GestureDetector(
-            onTap: () {
-              onTap;
-            },
-            child: const Text(
-              "SPEC >",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF4540A4),
-                letterSpacing: 1.2,
+          //-----------------------------
+          // See Specs Button
+          //-----------------------------
+          TextButton.icon(
+            label: const Icon(
+              Icons.arrow_forward_ios_outlined,
+              size: 16,
+            ),
+            icon: const Text('SPEC'),
+            onPressed: onTapSpec,
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(
+                Colors.blue[900]!,
               ),
             ),
           ),
+          const SizedBox(height: 40),
         ],
+      ),
+    );
+  }
+}
+
+class _AnimatedCustomAppBar extends StatelessWidget {
+  const _AnimatedCustomAppBar({
+    Key? key,
+    required this.animate,
+  }) : super(key: key);
+
+  final bool animate;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      curve: Curves.fastOutSlowIn,
+      duration: const Duration(milliseconds: 600),
+      transform: Matrix4.translationValues(0, animate ? -100 : 0, 0),
+      child: AnimatedOpacity(
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 600),
+        opacity: animate ? 0 : 1,
+        child: SizedBox(
+          height: kToolbarHeight,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Boats',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {},
+                  color: Colors.grey[800],
+                  iconSize: 40,
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
