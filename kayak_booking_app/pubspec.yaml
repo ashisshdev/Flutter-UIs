@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  simple_shadow: ^0.3.1
 
 dev_dependencies:
   flutter_test:
