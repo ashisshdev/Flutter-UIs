@@ -37,7 +37,7 @@ class MovieTeatherScreen extends StatelessWidget {
             ),
             image: DecorationImage(
               image: AssetImage(image),
-              alignment: Alignment.bottomCenter,
+              alignment: const Alignment(0, -0.7),
               fit: BoxFit.none,
             ),
           ),

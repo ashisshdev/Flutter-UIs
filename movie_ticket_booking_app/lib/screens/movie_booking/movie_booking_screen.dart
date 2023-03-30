@@ -5,8 +5,9 @@ import 'package:movie_ticket_booking_app/screens/movie_booking/movie_booking_scr
 import 'package:movie_ticket_booking_app/utils/theme/app_color.dart';
 
 class MovieBookingScreen extends StatefulWidget {
-  final Movie movie;
-  const MovieBookingScreen({super.key, required this.movie});
+  final String movieTitle;
+  final String movieImage;
+  const MovieBookingScreen({super.key, required this.movieTitle, required this.movieImage});
 
   @override
   State<MovieBookingScreen> createState() => _MovieBookingScreenState();
@@ -42,7 +43,7 @@ class _MovieBookingScreenState extends State<MovieBookingScreen> {
         ),
         centerTitle: true,
         title: Text(
-          widget.movie.title,
+          widget.movieTitle,
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
@@ -59,9 +60,9 @@ class _MovieBookingScreenState extends State<MovieBookingScreen> {
                   height: h * 0.25,
                   width: w - 20,
                   child: Hero(
-                    tag: widget.movie.assetImage,
+                    tag: widget.movieImage,
                     child: MovieTeatherScreen(
-                      image: widget.movie.assetImage,
+                      image: widget.movieImage,
                       //  maxWidth: w, maxHeigth: 200
                     ),
                   )),

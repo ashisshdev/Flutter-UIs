@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_ticket_booking_app/data/dummy_data.dart';
 import 'package:movie_ticket_booking_app/models/movie.dart';
 import 'package:movie_ticket_booking_app/screens/movie_details/movie_details_screen.dart';
+import 'package:movie_ticket_booking_app/screens/this_friday/this_friday_movies.dart';
 import 'package:movie_ticket_booking_app/utils/theme/app_color.dart';
 
 class BannerWidget extends StatefulWidget {
@@ -26,6 +27,7 @@ class _BannerWidgetState extends State<BannerWidget> {
             options: CarouselOptions(
               initialPage: showedIndex,
               viewportFraction: 1,
+              aspectRatio: 5 / 2.5,
               autoPlay: true,
               onPageChanged: (index, reason) {
                 setState(() {
@@ -162,6 +164,8 @@ class _NowPlayingMovieWidgetState extends State<NowPlayingMovieWidget> {
           enlargeStrategy: CenterPageEnlargeStrategy.height,
           initialPage: centerIndex,
           viewportFraction: 0.7,
+          enableInfiniteScroll: false,
+          padEnds: false,
           onPageChanged: (index, reason) {
             setState(() {
               centerIndex = index;
@@ -201,47 +205,44 @@ class _NowPlayingItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
-            child: Hero(
-              tag: movie.assetImage,
-              child: Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
-                    image: AssetImage(
-                      movie.assetImage,
-                    ),
-                    fit: BoxFit.cover,
+            child: Container(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                image: DecorationImage(
+                  image: AssetImage(
+                    movie.assetImage,
                   ),
+                  fit: BoxFit.cover,
                 ),
-                alignment: Alignment.bottomCenter,
-                child: isCenter
-                    ? AnimatedContainer(
-                        duration: const Duration(milliseconds: 400),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: AppColor.secondaryColor,
-                            borderRadius: const BorderRadius.vertical(
-                              bottom: Radius.circular(16),
-                            ),
-                          ),
-                          child: Text(
-                            "Buy Ticket",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(color: AppColor.primaryColor),
-                            maxLines: 1,
-                            textAlign: TextAlign.center,
+              ),
+              alignment: Alignment.bottomCenter,
+              child: isCenter
+                  ? AnimatedContainer(
+                      duration: const Duration(milliseconds: 400),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppColor.secondaryColor,
+                          borderRadius: const BorderRadius.vertical(
+                            bottom: Radius.circular(16),
                           ),
                         ),
-                      )
-                    : const SizedBox(),
-              ),
+                        child: Text(
+                          "Buy Ticket",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: AppColor.primaryColor),
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
             ),
           ),
           const SizedBox(height: 16),
@@ -267,8 +268,9 @@ class UpcomingMovieWidget extends StatelessWidget {
         itemCount: upcoming.length,
         options: CarouselOptions(
           height: 360,
-          pageSnapping: false,
           viewportFraction: 0.6,
+          enableInfiniteScroll: false,
+          padEnds: false,
         ),
         itemBuilder: (context, index, _) {
           return Column(
@@ -282,20 +284,17 @@ class UpcomingMovieWidget extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => MovieDetailScreen(movie: upcoming[index])));
                   },
-                  child: Hero(
-                    tag: upcoming[index].assetImage,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        image: DecorationImage(
-                          image: AssetImage(
-                            upcoming[index].assetImage,
-                          ),
-                          fit: BoxFit.cover,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      image: DecorationImage(
+                        image: AssetImage(
+                          upcoming[index].assetImage,
                         ),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -306,6 +305,69 @@ class UpcomingMovieWidget extends StatelessWidget {
                 upcoming[index].title,
                 style: Theme.of(context).textTheme.bodyLarge,
                 maxLines: 1,
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ThisFridayItems extends StatelessWidget {
+  const ThisFridayItems({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 360,
+      child: CarouselSlider.builder(
+        itemCount: thisFridayMovies.length,
+        options: CarouselOptions(
+          height: 380,
+          viewportFraction: 0.6,
+          enableInfiniteScroll: false,
+          padEnds: false,
+        ),
+        itemBuilder: (context, index, _) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => MoviesThisFriday(
+                              initialIndex: index,
+                            )));
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      image: DecorationImage(
+                        image: AssetImage(
+                          thisFridayMovies[index].image,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  thisFridayMovies[index].name,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  maxLines: 2,
+                ),
               ),
             ],
           );

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: "Movie Booking App UI",
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.dark,
+      // themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
       // home: const Dummy(),
