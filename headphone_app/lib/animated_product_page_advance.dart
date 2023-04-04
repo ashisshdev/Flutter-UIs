@@ -9,8 +9,7 @@ class AnimatedProductPageAdvance extends StatefulWidget {
   const AnimatedProductPageAdvance({super.key});
 
   @override
-  State<AnimatedProductPageAdvance> createState() =>
-      AnimatedProductPageAdvanceState();
+  State<AnimatedProductPageAdvance> createState() => AnimatedProductPageAdvanceState();
 }
 
 class MyCustomClipper extends CustomClipper<Path> {
@@ -34,12 +33,10 @@ class MyCustomClipper extends CustomClipper<Path> {
   }
 }
 
-class AnimatedProductPageAdvanceState
-    extends State<AnimatedProductPageAdvance>
+class AnimatedProductPageAdvanceState extends State<AnimatedProductPageAdvance>
     with TickerProviderStateMixin {
   late AnimationController _slideAnimationController;
   late Animation<Offset> _slideAnimation;
-
   late AnimationController clipperAnimation;
 
   @override
@@ -49,22 +46,19 @@ class AnimatedProductPageAdvanceState
       vsync: this,
       duration: Duration(seconds: 3),
     )..repeat(reverse: true);
-    _slideAnimation =
-        Tween<Offset>(begin: Offset(0, -0.15), end: Offset(0, 0))
-            .animate(
+    _slideAnimation = Tween<Offset>(begin: Offset(0, -0.15), end: Offset(0, 0)).animate(
       CurvedAnimation(
         parent: _slideAnimationController,
         curve: Curves.easeInOut,
       ),
     );
 
-    clipperAnimation = AnimationController(
-        vsync: this, duration: Duration(seconds: 3), upperBound: 5);
+    clipperAnimation =
+        AnimationController(vsync: this, duration: Duration(seconds: 3), upperBound: 5);
   }
 
   final Product currentProduct = Product(
-      title:
-          "boAt Rockerz 450 with Upto 15 Hours Playback Bluetooth Headset",
+      title: "boAt Rockerz 450 with Upto 15 Hours Playback Bluetooth Headset",
       images: [blackVariation, beigeVariation, blueVariation],
       relatedProducts: relatedProducts,
       description: description,
@@ -119,8 +113,7 @@ class AnimatedProductPageAdvanceState
                           animation: _slideAnimationController,
                           child: Center(
                               child: Image.asset(
-                            currentProduct
-                                .images[previousImageIndex].images[0],
+                            currentProduct.images[previousImageIndex].images[0],
                             key: Key(previousImageIndex.toString()),
                           )),
                           builder: (context, child) {
@@ -136,18 +129,14 @@ class AnimatedProductPageAdvanceState
                           animation: clipperAnimation,
                           builder: ((context, child) {
                             return ClipPath(
-                              clipper: MyCustomClipper(
-                                  animationValue:
-                                      clipperAnimation.value),
+                              clipper:
+                                  MyCustomClipper(animationValue: clipperAnimation.value),
                               child: AnimatedBuilder(
                                 animation: _slideAnimationController,
                                 child: Center(
                                     child: Image.asset(
-                                  currentProduct
-                                      .images[currentImageIndex]
-                                      .images[0],
-                                  key: Key(
-                                      currentImageIndex.toString()),
+                                  currentProduct.images[currentImageIndex].images[0],
+                                  key: Key(currentImageIndex.toString()),
                                 )),
                                 builder: (context, child) {
                                   return SlideTransition(
@@ -179,7 +168,7 @@ class AnimatedProductPageAdvanceState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       /// Title
-                     /// Title
+                      /// Title
                       ProductTitle(title: currentProduct.title),
 
                       /// Price and Rating
@@ -193,54 +182,43 @@ class AnimatedProductPageAdvanceState
                         height: 60,
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 4),
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(10))),
+                                color: Colors.black, style: BorderStyle.solid, width: 4),
+                            borderRadius: BorderRadius.all(Radius.circular(10))),
                         margin: EdgeInsets.only(top: 10),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 3),
+                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 3),
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
                               " 3 Available Colors :  ",
                               textScaleFactor: 1.3,
                               style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500),
+                                  color: Colors.black, fontWeight: FontWeight.w500),
                             ),
                             SizedBox(
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   shrinkWrap: true,
-                                  itemCount:
-                                      currentProduct.images.length,
+                                  itemCount: currentProduct.images.length,
                                   itemBuilder: ((context, index) {
                                     return InkWell(
                                       onTap: () {
-                                        print(
-                                            "passed index = $index");
+                                        print("passed index = $index");
                                         changeImage(index);
                                       },
                                       child: Container(
                                         height: 30,
                                         width: 30,
                                         padding: EdgeInsets.all(2),
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 8),
+                                        margin: EdgeInsets.symmetric(horizontal: 8),
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          border: Border.all(
-                                              color: Colors.black),
+                                          border: Border.all(color: Colors.black),
                                         ),
                                         child: Container(
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: currentProduct
-                                                .images[index].color,
+                                            color: currentProduct.images[index].color,
                                           ),
                                         ),
                                       ),
@@ -251,16 +229,15 @@ class AnimatedProductPageAdvanceState
                         ),
                       ),
 
-                                            /// Divider 1
+                      /// Divider 1
                       DividerHeightTen(),
 
                       /// Description
                       Text(
                         currentProduct.description,
                         textScaleFactor: 1.2,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400),
+                        style:
+                            TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
                       ),
 
                       /// Space
@@ -270,16 +247,13 @@ class AnimatedProductPageAdvanceState
                       DividerHeightTen(),
 
                       /// Highlights
-                      ProductHighlights(
-                          highlights: currentProduct.highlights),
+                      ProductHighlights(highlights: currentProduct.highlights),
 
                       /// Space
                       twentySizedBox(),
 
                       /// Horizontle Scrollable
-                      RelatedItemsBox(
-                          relatedProducts:
-                              currentProduct.relatedProducts),
+                      RelatedItemsBox(relatedProducts: currentProduct.relatedProducts),
                     ],
                   ),
                 ),
@@ -298,8 +272,7 @@ class AnimatedProductPageAdvanceState
                   height: 50,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [BoxShadow(color: Colors.white24)]),
+                      color: Colors.white, boxShadow: [BoxShadow(color: Colors.white24)]),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
