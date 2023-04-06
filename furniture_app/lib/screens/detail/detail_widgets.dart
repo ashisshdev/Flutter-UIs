@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:furniture_app/data/data.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
-class MyCustomClipper extends CustomClipper<Path> {
+class ImageClipper extends CustomClipper<Path> {
   final double animationValue;
 
-  MyCustomClipper({required this.animationValue});
+  ImageClipper({required this.animationValue});
 
   @override
   getClip(Size size) {
@@ -139,7 +139,7 @@ class _ImageSectionState extends State<ImageSection> with SingleTickerProviderSt
                                   animation: clipperAnimation,
                                   builder: (context, child) {
                                     return ClipPath(
-                                      clipper: MyCustomClipper(
+                                      clipper: ImageClipper(
                                           animationValue: clipperAnimation.value),
                                       child: Center(
                                           child: Image.asset(
