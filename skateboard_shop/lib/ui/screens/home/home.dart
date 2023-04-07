@@ -52,7 +52,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           pageBuilder: (context, animation, secondaryAnimation) {
             return FadeTransition(
               opacity: animation,
-              child:  DetailPage(board: board,),
+              child: SlideTransition(
+                  position: animation.drive(
+                      Tween(begin: const Offset(0.0, 1.0), end: Offset.zero)
+                          .chain(CurveTween(curve: Curves.ease))),
+                  child: DetailPage(
+                    board: board,
+                  )),
             );
           },
         ));
@@ -101,7 +107,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       builder: (context, value, child) {
                         final delta = (value - index).abs();
                         return SkateSlide(
-                          skateBaoard: board,
+                          skateBoard: board,
                           delta: delta,
                           onTapSpec: () => _goNextPage(context, board),
                         );

@@ -51,12 +51,12 @@ class AnimatedCustomAppBar extends StatelessWidget {
 
 class SkateSlide extends StatelessWidget {
   final double delta;
-  final SkateBaoard skateBaoard;
+  final SkateBoard skateBoard;
   final VoidCallback onTapSpec;
 
   const SkateSlide(
       {super.key,
-      required this.skateBaoard,
+      required this.skateBoard,
       required this.delta,
       required this.onTapSpec});
 
@@ -91,8 +91,8 @@ class SkateSlide extends StatelessWidget {
                     scale: lerpDouble(1.0, 0.7, delta),
                     // scale: lerpDouble(1.0, 0.7, delta)!,
                     child: Hero(
-                      tag: skateBaoard.name,
-                      child: Image.asset(skateBaoard.fImage, fit: BoxFit.cover),
+                      tag: skateBoard.fImage,
+                      child: Image.asset(skateBoard.fImage, fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -100,49 +100,96 @@ class SkateSlide extends StatelessWidget {
             ),
           ),
           SizedBox(height: h * 0.08),
-          Text(
-            skateBaoard.name,
-            textScaleFactor: 2.0,
-            style: const TextStyle(fontWeight: FontWeight.w700),
-          ),
-          //------------------------------
-          // Owner boat
-          //------------------------------
-          Text.rich(
-            textScaleFactor: 1.2,
-            TextSpan(
-              text: 'By ',
-              children: [
-                TextSpan(
-                  text: skateBaoard.by,
-                  style: TextStyle(
-                    color: Colors.grey[900],
+          GestureDetector(
+            onTap: () {},
+            onPanUpdate: (details) {
+              if (details.delta.dy < 0) {
+                onTapSpec();
+              }
+            },
+            child: Column(children: [
+              Hero(
+                tag: skateBoard.name,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Text(
+                    "${skateBoard.name} ",
+                    textScaleFactor: 2.0,
+                    style: const TextStyle(fontWeight: FontWeight.w700),
                   ),
                 ),
-              ],
-              style: TextStyle(color: Colors.grey[600], height: 1),
-            ),
-          ),
-          //-----------------------------
-          // See Specs Button
-          //-----------------------------
-          TextButton.icon(
-            label: const Icon(
-              Icons.arrow_forward_ios_outlined,
-              size: 26,
-            ),
-            icon: const Text(
-              'SPEC',
-              textScaleFactor: 1.2,
-            ),
-            onPressed: onTapSpec,
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(
-                Colors.blue[900]!,
               ),
-            ),
-          ),
-          SizedBox(height: h * 0.1),
+              //------------------------------
+              // Owner boat
+              //------------------------------
+              Hero(
+                tag: "${skateBoard.by} ",
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Text.rich(
+                    textScaleFactor: 1.2,
+                    TextSpan(
+                      text: 'By ',
+                      children: [
+                        TextSpan(
+                          text: "${skateBoard.by} ",
+                          style: TextStyle(
+                            color: Colors.grey[900],
+                          ),
+                        ),
+                      ],
+                      style: TextStyle(color: Colors.grey[600], height: 1),
+                    ),
+                  ),
+                ),
+              ),
+              //-----------------------------
+              // See Specs Button
+              //-----------------------------
+              // TextButton.icon(
+              //   label: const Icon(
+              //     Icons.arrow_forward_ios_outlined,
+              //     size: 26,
+              //   ),
+              //   icon: const Text(
+              //     'SPEC',
+              //     textScaleFactor: 1.2,
+              //   ),
+              //   onPressed: onTapSpec,
+              //   style: ButtonStyle(
+              //     foregroundColor: MaterialStateProperty.all<Color>(
+              //       Colors.blue[900]!,
+              //     ),
+              //   ),
+              // ),
+              SizedBox(height: h * 0.02),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.keyboard_double_arrow_up_rounded,
+                    color: Colors.grey,
+                    size: 30,
+                  ),
+                  InkWell(
+                    onTap: onTapSpec,
+                    child: const Text(
+                      'SPEC',
+                      textScaleFactor: 1.5,
+                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  const Icon(
+                    Icons.keyboard_double_arrow_up_rounded,
+                    color: Colors.grey,
+                    size: 30,
+                  ),
+                ],
+              ),
+              SizedBox(height: h * 0.08),
+            ]),
+          )
         ],
       ),
     );

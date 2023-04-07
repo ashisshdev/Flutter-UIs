@@ -1,6 +1,6 @@
 import 'dart:math';
 
-class SkateBaoard {
+class SkateBoard {
   final String name;
   final String by;
   final String price;
@@ -9,9 +9,9 @@ class SkateBaoard {
   final String fImage;
   final List<String> sizes;
   final String bImage;
-  final List<Map<String, dynamic>> specs;
+  final Map<String, String> specs;
 
-  SkateBaoard({
+  SkateBoard({
     required this.name,
     required this.by,
     required this.price,
@@ -51,16 +51,14 @@ final List<String> availableSizes = [
   '8.75"',
 ];
 
-final List<Map<String, String>> spec = [
-  {
-    'Ride Style': 'Carving',
-    'Mounting Style': 'Drop Through',
-    'Deck Thickness': '7-Ply',
-    'Grip Type': 'Black Grip Tape',
-    'Wheels': '69mm (78a) Offset Top Shelf Wheels',
-    'Bearings': 'ABEC 5 Bearings',
-  }
-];
+final Map<String, String> spec = {
+  'Ride Style': 'Carving',
+  'Mounting Style': 'Drop Through',
+  'Deck Thickness': '7-Ply',
+  'Grip Type': 'Black Grip Tape',
+  'Wheels': '69mm (78a) Offset Top Shelf Wheels',
+  'Bearings': 'ABEC 5 Bearings',
+};
 
 List<String> boardNames = [
   'Dead Lover',
@@ -97,9 +95,9 @@ List<String> boardCompanies = [
   'Krooked'
 ];
 
-List<SkateBaoard> allSkatesList = List.generate(
+List<SkateBoard> allSkatesList = List.generate(
     6,
-    (index) => SkateBaoard(
+    (index) => SkateBoard(
         name: boardNames[index],
         by: boardCompanies[index % boardCompanies.length],
         price: (Random().nextInt(10) + 15).toString(),
