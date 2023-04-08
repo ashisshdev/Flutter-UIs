@@ -117,19 +117,33 @@ class _HomePageState extends State<HomePage> {
                     ),
                     // transform: currentPage < index ? Matrix4.identity() : myMatrix,
                     child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(PageRouteBuilder(
+                      onTap: () async {
+                        final newIndex =
+                            await Navigator.of(context).push(PageRouteBuilder(
                           reverseTransitionDuration: const Duration(milliseconds: 600),
                           transitionDuration: const Duration(milliseconds: 600),
                           pageBuilder: (context, animation, secondaryAnimation) {
                             return FadeTransition(
                               opacity: animation,
                               child: DetailedView(
-                                kayak: thisKayak,
+                                index: index,
                               ),
                             );
                           },
                         ));
+
+                        /// TODO : Trying to push to index
+                        print('last index on details screen was $newIndex');
+                        // print(newIndex);
+                        // if (newIndex != null) {
+                        //   currentPage = double.parse(newIndex.toString());
+
+                        //   pageController.animateToPage(newIndex,
+                        //       duration: const Duration(microseconds: 1),
+                        //       curve: Curves.ease);
+
+                        //   setState(() {});
+                        // }
                       },
                       child: Transform(
                         alignment: Alignment.bottomCenter,
@@ -147,38 +161,8 @@ class _HomePageState extends State<HomePage> {
                                 child: Stack(
                                   alignment: Alignment.bottomLeft,
                                   children: [
-                                    Hero(
-                                      tag: thisKayak.color,
-                                      child: Container(
-                                        height: h * 0.20,
-                                        decoration: BoxDecoration(
-                                            color: kayaks[index].color.withOpacity(0.7),
-                                            borderRadius: const BorderRadius.all(
-                                                Radius.circular(20))),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(25),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          const Icon(Icons.arrow_forward,
-                                              color: Colors.white),
-                                          const SizedBox(height: 10),
-                                          Hero(
-                                            tag: thisKayak.name,
-                                            child: Material(
-                                              type: MaterialType.transparency,
-                                              child: Text(thisKayak.name,
-                                                  textScaleFactor: 2.0,
-                                                  style: const TextStyle(
-                                                      color: Colors.white)),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
+                                    ColorCard(color: thisKayak.color),
+                                    ForwardIconAndName(kayakname: thisKayak.name)
                                   ],
                                 ),
                               ),
@@ -186,22 +170,7 @@ class _HomePageState extends State<HomePage> {
                                 top: 0,
                                 right: w * 0.25,
                                 height: h * 0.30,
-                                child: Hero(
-                                  tag: thisKayak.image,
-                                  child: Transform.rotate(
-                                    angle: -.9,
-                                    alignment: Alignment.center,
-                                    child: SimpleShadow(
-                                      opacity: 0.3,
-                                      color: Colors.black,
-                                      offset: const Offset(-15, 10),
-                                      child: Image.asset(
-                                        thisKayak.image,
-                                        alignment: Alignment.topCenter,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                child: BoatImage(image: thisKayak.image),
                               )
                             ],
                           ),
@@ -213,6 +182,78 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ColorCard extends StatelessWidget {
+  final Color color;
+
+  const ColorCard({super.key, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: color,
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.20,
+        decoration: BoxDecoration(
+            color: color.withOpacity(0.7),
+            borderRadius: const BorderRadius.all(Radius.circular(20))),
+      ),
+    );
+  }
+}
+
+class ForwardIconAndName extends StatelessWidget {
+  final String kayakname;
+  const ForwardIconAndName({super.key, required this.kayakname});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(25),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          const Icon(Icons.arrow_forward, color: Colors.white),
+          const SizedBox(height: 10),
+          Hero(
+            tag: kayakname,
+            child: Material(
+              type: MaterialType.transparency,
+              child: Text(kayakname,
+                  textScaleFactor: 2.0, style: const TextStyle(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BoatImage extends StatelessWidget {
+  final String image;
+  const BoatImage({super.key, required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: image,
+      child: Transform.rotate(
+        angle: -.9,
+        alignment: Alignment.center,
+        child: SimpleShadow(
+          opacity: 0.3,
+          color: Colors.black,
+          offset: const Offset(-15, 10),
+          child: Image.asset(
+            image,
+            alignment: Alignment.topCenter,
+          ),
         ),
       ),
     );
