@@ -134,6 +134,10 @@ class _HomePageState extends State<HomePage> {
 
                         /// TODO : Trying to push to index
                         print('last index on details screen was $newIndex');
+                        // here I tried to move the page to index i just fetched 
+                        // but the problem is with the opacity 
+                        // uncomment below code and try to switch screens and you'll see the issue 
+
                         // print(newIndex);
                         // if (newIndex != null) {
                         //   currentPage = double.parse(newIndex.toString());
@@ -151,6 +155,7 @@ class _HomePageState extends State<HomePage> {
                             currentPage < index ? scrollingMatrix : extryExitMatrix,
                         child: Opacity(
                           opacity: currentPage < index ? 1 : 1 - enterExitAngle,
+                          /// this here needs to be a stack because Hero widgets cant have Hero Ancestors 
                           child: Stack(
                             alignment: Alignment.topCenter,
                             children: [
@@ -244,6 +249,8 @@ class BoatImage extends StatelessWidget {
     return Hero(
       tag: image,
       child: Transform.rotate(
+        /// this is the angle at which the boat is tilted 
+        /// we will make this angle 0 slowly when we use the hero widget 
         angle: -.9,
         alignment: Alignment.center,
         child: SimpleShadow(

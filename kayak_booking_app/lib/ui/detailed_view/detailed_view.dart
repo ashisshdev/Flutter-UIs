@@ -50,6 +50,7 @@ class _DetailedViewState extends State<DetailedView> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
+                  // again this needs to be a stack because Hero widgets cant have hero ancestors
                   child: Stack(
                 alignment: Alignment.center,
                 children: [
@@ -112,6 +113,13 @@ class _DetailedViewState extends State<DetailedView> {
                       ),
                     ),
                   ),
+
+                  /// everthing above is fine
+                  /// the problem is in below code
+                  ///
+                  /// Quick : See the video from 00:03 to 00:04 where the boats transition
+                  /// that transition is achieved by the if else condition inside the value listenable builder below
+                  ///
                   Positioned(
                     right: 0,
                     left: 0,
@@ -131,10 +139,13 @@ class _DetailedViewState extends State<DetailedView> {
                         return Center(
                           child: Hero(
                               tag: kayaks[currentKayakIndex.value].image,
+                              // Hero flight builder
+                              // we use this to modify the hero transition
                               flightShuttleBuilder: (_, animation, flightDirection, ___, ____) {
                                 return AnimatedBuilder(
                                   animation: animation,
                                   builder: (context, child) {
+                                    /// simply we, take the image and undo the rotation by slowlly multiply it with a dimnishing value 1 --> 0.
                                     return Transform.rotate(
                                       angle: -.9 * (1 - animation.value),
                                       alignment: Alignment.center,
@@ -160,6 +171,7 @@ class _DetailedViewState extends State<DetailedView> {
                                   print("pagevalue = ${pageValue.value}");
 
                                   final child = Opacity(
+                                    /// again this is some logic to achieve the transiting between the boats on the detail screen
                                     opacity: (index - pageValue.value),
                                     child: SimpleShadow(
                                       opacity: 0.3,
