@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:kayak_booking_app/data/dummy_data.dart';
+import 'package:kayak_booking_app/ui/detailed_view/detailed_view.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    pageController = PageController(initialPage: 0, viewportFraction: 0.5)
+    pageController = PageController(initialPage: 0, viewportFraction: 0.45)
       ..addListener(() {
         setState(() {
           currentPage = pageController.page!;
@@ -40,8 +39,25 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: const Icon(Icons.menu_rounded, color: Colors.black),
-        actions: const [Icon(Icons.person, color: Colors.black)],
+        leadingWidth: 0,
+        leading: const Padding(
+          padding: EdgeInsets.only(left: 8),
+          child: Icon(
+            Icons.menu_rounded,
+            color: Colors.black,
+            size: 30,
+          ),
+        ),
+        actions: const [
+          Icon(
+            Icons.person,
+            color: Colors.black,
+            size: 30,
+          ),
+          SizedBox(
+            width: 20,
+          )
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -58,31 +74,8 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(
               height: 65,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Center(
-                  child: TextFormField(
-                    textAlignVertical: TextAlignVertical.bottom,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintStyle: const TextStyle(),
-                      focusColor: Colors.black,
-                      focusedBorder: _border(Colors.black, 3),
-                      border: _border(Colors.grey.withOpacity(0.05), 1),
-                      hintText: 'Search',
-                      alignLabelWithHint: true,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 20),
-                      prefixIcon: const Padding(
-                        padding: EdgeInsets.only(top: 10, right: 5, left: 5, bottom: 5),
-                        child: Icon(Icons.search),
-                      ),
-                    ),
-                    onFieldSubmitted: (value) {},
-                  ),
-                ),
-              ),
+              width: w,
+              child: const SearchBox(),
             ),
             const SizedBox(height: 5),
             Expanded(
@@ -93,6 +86,8 @@ class _HomePageState extends State<HomePage> {
                 scrollDirection: Axis.vertical,
                 padEnds: false,
                 itemBuilder: (context, index) {
+                  final thisKayak = kayaks[index];
+
                   double enterExitAngle = (currentPage - index).abs();
                   double scrollingAngle = (currentPage - index).abs();
 
@@ -121,59 +116,95 @@ class _HomePageState extends State<HomePage> {
                       bottom: 2,
                     ),
                     // transform: currentPage < index ? Matrix4.identity() : myMatrix,
-                    child: Transform(
-                      alignment: Alignment.bottomCenter,
-                      transform: currentPage < index ? scrollingMatrix : extryExitMatrix,
-                      child: Opacity(
-                        opacity: currentPage < index ? 1 : 1 - enterExitAngle,
-                        child: Stack(
-                          alignment: Alignment.topCenter,
-                          children: [
-                            Positioned(
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: Container(
-                                height: h * 0.20,
-                                decoration: BoxDecoration(
-                                    color: kayaks[index].color.withOpacity(0.7),
-                                    borderRadius:
-                                        const BorderRadius.all(Radius.circular(20))),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(25),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      const Icon(Icons.arrow_forward,
-                                          color: Colors.white),
-                                      const SizedBox(height: 10),
-                                      Text(kayaks[index].name,
-                                          textScaleFactor: 2.0,
-                                          style: const TextStyle(color: Colors.white)),
-                                    ],
-                                  ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(PageRouteBuilder(
+                          reverseTransitionDuration: const Duration(milliseconds: 600),
+                          transitionDuration: const Duration(milliseconds: 600),
+                          pageBuilder: (context, animation, secondaryAnimation) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: DetailedView(
+                                kayak: thisKayak,
+                              ),
+                            );
+                          },
+                        ));
+                      },
+                      child: Transform(
+                        alignment: Alignment.bottomCenter,
+                        transform:
+                            currentPage < index ? scrollingMatrix : extryExitMatrix,
+                        child: Opacity(
+                          opacity: currentPage < index ? 1 : 1 - enterExitAngle,
+                          child: Stack(
+                            alignment: Alignment.topCenter,
+                            children: [
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Stack(
+                                  alignment: Alignment.bottomLeft,
+                                  children: [
+                                    Hero(
+                                      tag: thisKayak.color,
+                                      child: Container(
+                                        height: h * 0.20,
+                                        decoration: BoxDecoration(
+                                            color: kayaks[index].color.withOpacity(0.7),
+                                            borderRadius: const BorderRadius.all(
+                                                Radius.circular(20))),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(25),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          const Icon(Icons.arrow_forward,
+                                              color: Colors.white),
+                                          const SizedBox(height: 10),
+                                          Hero(
+                                            tag: thisKayak.name,
+                                            child: Material(
+                                              type: MaterialType.transparency,
+                                              child: Text(thisKayak.name,
+                                                  textScaleFactor: 2.0,
+                                                  style: const TextStyle(
+                                                      color: Colors.white)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              top: -30,
-                              right: w * 0.25,
-                              height: h * 0.30,
-                              child: Transform.rotate(
-                                angle: pi * -1.3,
-                                child: SimpleShadow(
-                                  opacity: 0.3,
-                                  color: Colors.black,
-                                  offset: const Offset(15, -10),
-                                  child: Image.asset(
-                                    kayaks[index].image,
-                                    alignment: Alignment.topCenter,
+                              Positioned(
+                                top: 0,
+                                right: w * 0.25,
+                                height: h * 0.30,
+                                child: Hero(
+                                  tag: thisKayak.image,
+                                  child: Transform.rotate(
+                                    angle: -.9,
+                                    alignment: Alignment.center,
+                                    child: SimpleShadow(
+                                      opacity: 0.3,
+                                      color: Colors.black,
+                                      offset: const Offset(-15, 10),
+                                      child: Image.asset(
+                                        thisKayak.image,
+                                        alignment: Alignment.topCenter,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -182,6 +213,38 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class SearchBox extends StatelessWidget {
+  const SearchBox({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Center(
+        child: TextFormField(
+          textAlignVertical: TextAlignVertical.bottom,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            hintStyle: const TextStyle(),
+            focusColor: Colors.black,
+            focusedBorder: _border(Colors.black, 3),
+            border: _border(Colors.grey.withOpacity(0.05), 1),
+            hintText: 'Search',
+            alignLabelWithHint: true,
+            contentPadding: const EdgeInsets.symmetric(vertical: 20),
+            prefixIcon: const Padding(
+              padding: EdgeInsets.only(top: 10, right: 5, left: 5, bottom: 5),
+              child: Icon(Icons.search),
+            ),
+          ),
+          onFieldSubmitted: (value) {},
         ),
       ),
     );
