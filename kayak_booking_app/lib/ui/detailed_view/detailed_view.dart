@@ -13,8 +13,8 @@ class DetailedView extends StatefulWidget {
 
 class _DetailedViewState extends State<DetailedView> {
   late ValueNotifier<int> currentKayakIndex;
-  late ValueNotifier<double> pageValue;
   late PageController pageController;
+  late ValueNotifier<double> pageValue;
 
   @override
   void initState() {
@@ -113,20 +113,12 @@ class _DetailedViewState extends State<DetailedView> {
                       ),
                     ),
                   ),
-
-                  /// everthing above is fine
-                  /// the problem is in below code
-                  ///
-                  /// Quick : See the video from 00:03 to 00:04 where the boats transition
-                  /// that transition is achieved by the if else condition inside the value listenable builder below
-                  ///
                   Positioned(
                     right: 0,
                     left: 0,
                     bottom: h * 0.25,
                     height: h * 0.65,
-                    child: Center(
-                        child: PageView.builder(
+                    child: PageView.builder(
                       controller: pageController,
                       scrollDirection: Axis.vertical,
                       onPageChanged: (value) {
@@ -136,20 +128,36 @@ class _DetailedViewState extends State<DetailedView> {
                       },
                       itemCount: kayaks.length,
                       itemBuilder: (context, index) {
-                        return Center(
-                          child: Hero(
-                              tag: kayaks[currentKayakIndex.value].image,
-                              // Hero flight builder
-                              // we use this to modify the hero transition
-                              flightShuttleBuilder: (_, animation, flightDirection, ___, ____) {
-                                return AnimatedBuilder(
-                                  animation: animation,
-                                  builder: (context, child) {
-                                    /// simply we, take the image and undo the rotation by slowlly multiply it with a dimnishing value 1 --> 0.
-                                    return Transform.rotate(
-                                      angle: -.9 * (1 - animation.value),
-                                      alignment: Alignment.center,
-                                      child: child,
+                        return ValueListenableBuilder<double>(
+                          valueListenable: pageValue,
+                          builder: (context, value, child) {
+                            return Center(
+                              child: Opacity(
+                                opacity: (pageValue.value + 1 - currentKayakIndex.value).clamp(0, 1),
+                                child: Hero(
+                                  tag: kayaks[currentKayakIndex.value].image,
+                                  // Hero flight builder
+                                  // we use this to modify the hero transition
+                                  flightShuttleBuilder: (_, animation, flightDirection, ___, ____) {
+                                    return AnimatedBuilder( 
+                                      animation: animation,
+                                      builder: (context, child) {
+                                        /// simply we, take the image and undo the rotation by slowlly multiply it with a dimnishing value 1 --> 0.
+                                        return Transform.rotate(
+                                          angle: -.9 * (1 - animation.value),
+                                          alignment: Alignment.center,
+                                          child: child,
+                                        );
+                                      },
+                                      child: SimpleShadow(
+                                        opacity: 0.3,
+                                        color: Colors.black,
+                                        offset: const Offset(-15, 10),
+                                        child: Image.asset(
+                                          kayaks[currentKayakIndex.value].image,
+                                          alignment: Alignment.topCenter,
+                                        ),
+                                      ),
                                     );
                                   },
                                   child: SimpleShadow(
@@ -161,52 +169,13 @@ class _DetailedViewState extends State<DetailedView> {
                                       alignment: Alignment.topCenter,
                                     ),
                                   ),
-                                );
-                              },
-                              child: ValueListenableBuilder(
-                                valueListenable: pageValue,
-                                builder: (context, value, child) {
-                                  print("opacity = ${index - pageValue.value}");
-                                  print("index = $index");
-                                  print("pagevalue = ${pageValue.value}");
-
-                                  final child = Opacity(
-                                    /// again this is some logic to achieve the transiting between the boats on the detail screen
-                                    opacity: (index - pageValue.value),
-                                    child: SimpleShadow(
-                                      opacity: 0.3,
-                                      color: Colors.black,
-                                      offset: const Offset(-15, 10),
-                                      child: Image.asset(
-                                        kayaks[index].image,
-                                        alignment: Alignment.topCenter,
-                                      ),
-                                    ),
-                                  );
-
-                                  // upcoming boat
-                                  if (index == pageValue.value.floor() + 1) {
-                                    return Transform.translate(
-                                      offset: Offset(0.0, -h * 0.6 * (index - pageValue.value)),
-                                      child: child,
-                                    );
-                                  }
-                                  // previous boat
-                                  else if (index == pageValue.value.floor() - 1) {
-                                    return Transform.translate(
-                                      offset: Offset(0.0, h * 0.6 * (pageValue.value - index)),
-                                      child: child,
-                                    );
-                                  }
-                                  // current boat
-                                  else {
-                                    return child;
-                                  }
-                                },
-                              )),
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
-                    )),
+                    ),
                   )
                 ],
               ))

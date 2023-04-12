@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kayak_booking_app/ui/home/home.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const KayakBookingApp());
@@ -10,12 +11,17 @@ class KayakBookingApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Yathch Booking App',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const HomePage());
+    return ChangeNotifierProvider(
+      create: (context) {
+        return PageController();
+      },
+      child: MaterialApp(
+          title: 'Yathch Booking App',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: const HomePage()),
+    );
   }
 }

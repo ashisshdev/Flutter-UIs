@@ -155,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                             currentPage < index ? scrollingMatrix : extryExitMatrix,
                         child: Opacity(
                           opacity: currentPage < index ? 1 : 1 - enterExitAngle,
-                          /// this here needs to be a stack because Hero widgets cant have Hero Ancestors 
+                            /// this here needs to be a stack because Hero widgets cant have Hero Ancestors 
                           child: Stack(
                             alignment: Alignment.topCenter,
                             children: [
