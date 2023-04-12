@@ -45,7 +45,6 @@ class _MyOnboardingState extends State<MyOnboarding> {
       ..addListener(() {
         setState(() {
           pageValue = pageController.page!;
-          print(pageValue);
         });
       });
 
@@ -257,6 +256,36 @@ class _MyOnboardingState extends State<MyOnboarding> {
                           ),
                         )),
 
+                Positioned(
+                    bottom: -40,
+                    left: w * 0.15,
+                    height: 100,
+                    width: 100,
+                    child: Transform.rotate(
+                      alignment: Alignment.center,
+                      angle: pi / 3 * pageValue + 0.9,
+                      child: AnimatedContainer(
+                        height: 200,
+                        width: 200,
+                        duration: const Duration(milliseconds: 300),
+                        color: myColors[selectedIndex + 1].withOpacity(0.9),
+                      ),
+                    )),
+                Positioned(
+                    bottom: -60,
+                    left: w * 0.45,
+                    height: 150,
+                    width: 100,
+                    child: Transform.rotate(
+                      alignment: Alignment.center,
+                      angle: pi / 2 * pageValue + 0.2,
+                      child: AnimatedContainer(
+                        height: 200,
+                        width: 200,
+                        duration: const Duration(milliseconds: 300),
+                        color: myColors[selectedIndex].withOpacity(0.9),
+                      ),
+                    )),
                 Positioned(
                   height: h * 0.85,
                   width: w,
