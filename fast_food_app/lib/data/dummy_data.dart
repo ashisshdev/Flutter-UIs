@@ -18,21 +18,11 @@ class TabBarItem {
 }
 
 List<TabBarItem> tabBarItems = [
-  TabBarItem(
-      name: "Donuts",
-      image: AppAssets.homePageAssets.homepageTabIconDonut),
-  TabBarItem(
-      name: "Burgers",
-      image: AppAssets.homePageAssets.homepageTabIconBurger),
-  TabBarItem(
-      name: "Smoothies",
-      image: AppAssets.homePageAssets.homepageTabIconSmoothie),
-  TabBarItem(
-      name: "Pancakes",
-      image: AppAssets.homePageAssets.homepageTabIconPancake),
-  TabBarItem(
-      name: "Pizzas",
-      image: AppAssets.homePageAssets.homepageTabIconPizza),
+  TabBarItem(name: "Donuts", image: AppAssets.homePageAssets.homepageTabIconDonut),
+  TabBarItem(name: "Burgers", image: AppAssets.homePageAssets.homepageTabIconBurger),
+  TabBarItem(name: "Smoothies", image: AppAssets.homePageAssets.homepageTabIconSmoothie),
+  TabBarItem(name: "Pancakes", image: AppAssets.homePageAssets.homepageTabIconPancake),
+  TabBarItem(name: "Pizzas", image: AppAssets.homePageAssets.homepageTabIconPizza),
 ];
 
 /// Donut Tab
@@ -177,3 +167,7 @@ List<Nutrient> nutrients = [
   Nutrient(value: "5 Gram", percentage: 2, name: "Protein"),
   Nutrient(value: "140 Kcal", percentage: 40, name: "Energy"),
 ];
+
+///
+List<String> allPizzaImages =
+    List.generate(11, (index) => 'assets/images/pizzas/${index + 1}.png');
