@@ -21,12 +21,16 @@ class _RemixPizzaState extends State<RemixPizza> {
     page1Controller =
         PageController(initialPage: page1CurrentIndex, viewportFraction: 0.35)
           ..addListener(() {
-            page1PageValue = page1Controller.page ?? 0.0;
+            setState(() {
+              page1PageValue = page1Controller.page ?? 0.0;
+            });
           });
     page2Controller =
         PageController(initialPage: page2CurrentIndex, viewportFraction: 0.35)
           ..addListener(() {
-            page2PageValue = page2Controller.page ?? 0.0;
+            setState(() {
+              page2PageValue = page2Controller.page ?? 0.0;
+            });
           });
     super.initState();
   }
@@ -55,24 +59,26 @@ class _RemixPizzaState extends State<RemixPizza> {
                 // padEnds: false,
                 itemCount: allPizzaImages.length,
                 itemBuilder: (context, index) {
-                  // final delta = (page1PageValue - index + 1).abs();
+                  // final delta = (page1PageValue - index).abs();
 
-                  return Opacity(
-                    opacity: index == page1CurrentIndex ? 1 : 0.5,
-                    child: Container(
-                      // color: index == page1CurrentIndex ? Colors.red : Colors.black,
-                      margin: index == page1PageValue
-                          ? const EdgeInsets.only(left: 15, top: 5, bottom: 5, right: 1)
-                          : const EdgeInsets.only(left: 55, top: 5, bottom: 5, right: 1),
-                      padding: index == page1PageValue.floor()
-                          ? EdgeInsets.zero
-                          : const EdgeInsets.only(left: 40, top: 40, bottom: 40),
+                  // final double scaleFactor =
+                  //     max(0.6, (1 - (page1PageValue - index).abs() * 0.2));
+                  // final bool isCurrentPage = page1PageValue == index;
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 0),
+                    curve: Curves.easeInOut,
+                    // transform: Matrix4.identity()
+                    //   ..scale(isCurrentPage ? 1.0 : scaleFactor),
+                    alignment: Alignment.centerRight,
+                    child: Opacity(
+                      opacity: page1PageValue.round() == index ? 1 : 0.3,
+                      // opacity: isCurrentPage ? 1.0 : 0.5,
                       child: Stack(
                         children: [
                           Positioned.fill(
-                            right: -150,
+                            right: -190,
                             top: 0,
-                            left: 10,
+                            left: 0,
                             bottom: 0,
                             child: Image.asset(
                               allPizzaImages[index],
@@ -96,14 +102,29 @@ class _RemixPizzaState extends State<RemixPizza> {
                 // padEnds: false,
                 itemCount: allPizzaImages.length,
                 itemBuilder: (context, index) {
-                  // return Container(
-                  //   color: index == page2CurrentIndex ? Colors.red : Colors.black,
-                  //   margin: index == page2CurrentIndex
-                  //       ? const EdgeInsets.only(left: 1, top: 5, bottom: 5, right: 15)
-                  //       : const EdgeInsets.only(left: 1, top: 5, bottom: 5, right: 35),
-                  // );
-                  return Container(
-                    color: Colors.green,
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 0),
+                    curve: Curves.easeInOut,
+                    // transform: Matrix4.identity()
+                    //   ..scale(isCurrentPage ? 1.0 : scaleFactor),
+                    alignment: Alignment.centerRight,
+                    child: Opacity(
+                      opacity: page2PageValue.round() == index ? 1 : 0.3,
+                      // opacity: isCurrentPage ? 1.0 : 0.5,
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                            right: 0,
+                            top: 0,
+                            left: -190,
+                            bottom: 0,
+                            child: Image.asset(
+                              allPizzaImages[index],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   );
                 },
               ))
@@ -114,3 +135,55 @@ class _RemixPizzaState extends State<RemixPizza> {
     );
   }
 }
+
+
+// class MyPageView extends StatefulWidget {
+//   const MyPageView({Key? key}) : super(key: key);
+
+//   @override
+//   _MyPageViewState createState() => _MyPageViewState();
+// }
+
+// class _MyPageViewState extends State<MyPageView> {
+//   final PageController _pageController = PageController(viewportFraction: 3.5);
+//   int _currentPage = 0;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _pageController.addListener(() {
+//       setState(() {
+//         _currentPage = _pageController.page!.round();
+//       });
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return PageView.builder(
+//       controller: _pageController,
+//       itemCount: itemCount,
+//       itemBuilder: (BuildContext context, int index) {
+//         final double scaleFactor = max(0.6, (1 - (_currentPage - index).abs() * 0.2));
+//         final bool isCurrentPage = _currentPage == index;
+//         return AnimatedContainer(
+//           duration: Duration(milliseconds: 250),
+//           curve: Curves.easeInOut,
+//           transform: Matrix4.identity()
+//             ..scale(isCurrentPage ? 1.0 : scaleFactor)
+//             ..translate(isCurrentPage ? 0.0 : (50 * (_currentPage - index)).toDouble()),
+//           child: Opacity(
+//             opacity: isCurrentPage ? 1.0 : 0.5,
+//             child: /* Your content widget here */,
+//           ),
+//         );
+//       },
+//     );
+//   }
+
+//   @override
+//   void dispose() {
+//     _pageController.dispose();
+//     super.dispose();
+//   }
+// }
