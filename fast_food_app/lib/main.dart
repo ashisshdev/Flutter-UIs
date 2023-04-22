@@ -3,11 +3,11 @@ import 'package:fast_food_app/ui/home/tabs/pizzza/remix_pizza/remix_pizza.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const DonutApp());
+  runApp(const FastFoodApp());
 }
 
-class DonutApp extends StatelessWidget {
-  const DonutApp({super.key});
+class FastFoodApp extends StatelessWidget {
+  const FastFoodApp({super.key});
 
   @override
   Widget build(BuildContext context) {

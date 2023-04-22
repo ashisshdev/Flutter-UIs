@@ -170,4 +170,40 @@ List<Nutrient> nutrients = [
 
 ///
 List<String> allPizzaImages =
-    List.generate(11, (index) => 'assets/images/pizzas/${index + 1}.png');
+    List.generate(9, (index) => 'assets/images/pizzas/remix/${index + 1}.png');
+
+class RemixPizza {
+  String name;
+  int fullPrice;
+  int halpPrice;
+  String image;
+  RemixPizza({
+    required this.name,
+    required this.fullPrice,
+    required this.halpPrice,
+    required this.image,
+  });
+}
+
+List pizzaNames = [
+  'Hawaiian',
+  'All Veg',
+  'Farmhouse',
+  'Margherita',
+  'Paneer Punch',
+  "Meat Load",
+  'Capricciosa',
+  'Indian Farm',
+  'Tandoori Malai'
+];
+
+int randomFullPrice() => Random().nextInt(20) + 20;
+int notSoRandomHalfPrice() => 15 + Random().nextInt(10);
+
+List<RemixPizza> allRemixAblePizzas = List.generate(
+    allPizzaImages.length,
+    (index) => RemixPizza(
+        name: pizzaNames[index % pizzaNames.length],
+        fullPrice: randomFullPrice(),
+        halpPrice: notSoRandomHalfPrice(),
+        image: allPizzaImages[index]));
