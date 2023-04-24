@@ -1,4 +1,3 @@
-import 'package:fast_food_app/ui/home/homepage.dart';
 import 'package:fast_food_app/ui/home/tabs/pizzza/remix_pizza/remix_pizza.dart';
 import 'package:flutter/material.dart';
 
