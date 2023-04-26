@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:white_sounds/ui/home/home.dart';
+
+import 'ui/mirror/home/home_mirror.dart';
 
 /// inspired by this dribble design - https://dribbble.com/shots/6730530-White-Noise
 
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: HomeMirror(),
+        // home: HomePageOriginal(),
       ),
     );
   }

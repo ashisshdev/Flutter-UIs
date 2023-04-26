@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:white_sounds/ui/home/section1/section1.dart';
-import 'package:white_sounds/ui/home/section2/section2.dart';
+import 'package:white_sounds/ui/mirror/home/section1mirror/section1mirror.dart';
+import 'package:white_sounds/ui/mirror/home/section2mirror/section2mirror.dart';
 import 'package:white_sounds/utils/constants.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeMirror extends StatefulWidget {
+  const HomeMirror({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeMirror> createState() => _HomeMirrorState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeMirrorState extends State<HomeMirror> {
   late PageController pageController;
   final int initialIndex = 0;
   late ValueNotifier<double> page;
@@ -23,10 +23,9 @@ class _HomePageState extends State<HomePage> {
       initialPage: initialIndex,
       viewportFraction: kPageViewPointFraction,
     )..addListener(() {
-        setState(() {
-          /// the page value will always vary from 0.0 to kPageViewPointFraction back and forth
-          page.value = pageController.page ?? 0.0;
-        });
+        /// the page value will always vary from 0.0 to kPageViewPointFraction back and forth
+        page.value = pageController.page ?? 0.0;
+        // pageValue = pageController.page ?? 0.0;
       });
   }
 
@@ -47,12 +46,11 @@ class _HomePageState extends State<HomePage> {
             padEnds: false,
             children: [
               Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black, width: 0.3)),
+                decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 0.3)),
                 child: ValueListenableBuilder(
                   valueListenable: page,
                   builder: (context, value, child) {
-                    return Section1(pageValue: value);
+                    return Section2Mirror(pageValue: value);
                   },
                 ),
               ),
@@ -63,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                 child: ValueListenableBuilder(
                   valueListenable: page,
                   builder: (context, value, child) {
-                    return Section2(pageValue: value);
+                    return Section1Mirror(pageValue: value);
                   },
                 ),
               ),
