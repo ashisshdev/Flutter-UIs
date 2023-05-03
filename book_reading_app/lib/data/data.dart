@@ -2,7 +2,17 @@ import 'dart:math';
 
 import 'models/book.dart';
 
-List categories = ["Adventure", 'Crime', 'Fantasy', 'Horror', 'Drama', 'Self Help', 'Business', 'Communication', 'Finance'];
+List categories = [
+  "Adventure",
+  'Crime',
+  'Fantasy',
+  'Horror',
+  'Drama',
+  'Self Help',
+  'Business',
+  'Communication',
+  'Finance'
+];
 
 List booknames = [
   'Spirit Run',
@@ -20,16 +30,30 @@ List booknames = [
 
 List bookNamesBG = [
   'SPIRIT\nRUN',
-  'INTO\nTHE\nPLANET',
+  'INTO  THE\nPLANET',
   'THE\nPAST\nIS\nRISING',
-  'LIFE\nOF\nPI',
-  'AROUND\nTHE\nWORLD\nIN\nEIGHTY\nDAYS',
-  'INTO\nTHE\nWILD',
-  'TARZAN\nOF\nTHE\nAPES',
+  'LIFE\nOF PI',
+  'AROUND THE\nWORLD IN\nEIGHTY DAYS',
+  'INTO THE\nWILD',
+  'TARZAN\nOF THE\nAPES',
   'THE\nTHREE\nMUSKETEERS',
-  'JOURNEY\nTO\nTHE\nCENTER\nOF\nTHE\nEARTH',
+  'JOURNEY\nTO THE\nCENTER OF\nTHE EARTH',
   'THE\nMARTIAN',
-  'THE\nLAST\nTHING\nHE\nTOLD\nME'
+  'THE LAST\nTHING HE\nTOLD ME'
+];
+
+List<List> bookNamesBGLists = [
+  ['SPIRIT', 'RUN'],
+  ['INTO THE', 'PLANET'],
+  ['THE', 'PAST', 'IS', 'RISING'],
+  ['LIFE', 'OF PI'],
+  ['AROUND THE', 'WORLD IN', 'EIGHTY DAYS'],
+  ['INTO', 'THE', 'WILD'],
+  ['TARZAN', 'OF THE', 'APES'],
+  ['THE', 'THREE', 'MUSKETEERS'],
+  ['JOURNEY', 'TO THE', 'CENTER OF', 'THE EARTH'],
+  ['THE', 'MARTIAN'],
+  ['THE LAST', 'THING HE', 'TOLD ME']
 ];
 
 List authors = [
@@ -65,7 +89,7 @@ List<Book> allBooks = List.generate(
     (index) => Book(
         name: booknames[index],
         author: authors[index],
-        image: "assets/books/b${index+1}.jpg",
+        image: "assets/books/b${index + 1}.jpg",
         rating: randomRating(),
         genre: "Adventure",
         duration: randomDuration(),
@@ -75,4 +99,4 @@ List<Book> allBooks = List.generate(
 Random random = Random();
 
 String randomDuration() => '${random.nextInt(3) + 2}h ${random.nextInt(11) * 5}min';
-int randomRating() => random.nextInt(2)+3;
+int randomRating() => random.nextInt(2) + 3;
