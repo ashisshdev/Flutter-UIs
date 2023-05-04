@@ -3,6 +3,10 @@ import 'package:book_reading_app/ui/screens/sections/audio_books/audio_books_sec
 import 'package:book_reading_app/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ficonsax/ficonsax.dart';
+
+
+const double pageViewPoint = 0.50;
 
 class AudioBooksSection extends StatefulWidget {
   const AudioBooksSection({super.key});
@@ -12,6 +16,23 @@ class AudioBooksSection extends StatefulWidget {
 }
 
 class _AudioBooksSectionState extends State<AudioBooksSection> {
+
+   int currentIndex = 0;
+  double pageValue = 0.0;
+  late PageController pageController;
+
+  @override
+  void initState() {
+    pageController = PageController(viewportFraction: pageViewPoint)
+      ..addListener(() {
+        setState(() {
+          pageValue = pageController.page ?? 0.0;
+        });
+      });
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final h = MediaQuery.of(context).size.height;
@@ -32,8 +53,129 @@ class _AudioBooksSectionState extends State<AudioBooksSection> {
               child: SingleChildScrollView(
             child: Column(
               children: [
-                const CustomShapeContainer(),
-                Column(
+                SizedBox(
+                  child: Stack(
+        children: [
+          ClipPath(
+            clipper: ContainerClipper(),
+            child: Container(
+              height: h * 0.65,
+              color: mainColor,
+              width: w,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Icon(
+                          IconsaxOutline.arrow_left_2,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 15),
+                        child: Icon(
+                          IconsaxOutline.bookmark_2,
+                          color: Colors.black,
+                          size: 25,
+                        ),
+                      )
+                    ],
+                  ),
+                  Expanded(
+                    child: AnimatedBuilder(
+                      animation: pageController,
+                      builder: (context, child) {
+                        return Stack(
+                          children: [
+                            Positioned.fill(
+                                top: -40,
+                                bottom: -10,
+                                left: 20,
+                                right: 20,
+                                child: Column(
+                                  children: [
+                                    for (int j = 0;
+                                        j < bookNamesBGLists[currentIndex].length;
+                                        j++) ...[
+                                      BackGroundText(text: bookNamesBGLists[currentIndex][j])
+                                    ],
+                                  ],
+                                )),
+                            Positioned.fill(
+                              child: PageView.builder(
+                                controller: pageController,
+                                onPageChanged: (value) {
+                                  currentIndex = value;
+                                },
+                                itemBuilder: (context, index) {
+                                  final book = allBooks[index];
+                                  final scale = 1 - (0.2 * (pageValue - index).abs());
+                                  final opacity =
+                                      ((1 - (pageValue - index).abs()) + 0.6).clamp(0.0, 1.0);
+                                  return Transform.scale(
+                                    scale: scale,
+                                    child: Opacity(
+                                      opacity: opacity,
+                                      child: Center(
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              flex: 5,
+                                              child: BookImage(image: book.image),
+                                            ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: index != currentIndex
+                                                  ? Container()
+                                                  : BookNameAndRating(book: book),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    height: w * .19,
+                    width: w * .19,
+                    margin: EdgeInsets.only(bottom: h * .015),
+                    alignment: Alignment.topCenter,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: blackColor,
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 2),
+                              color: Colors.black,
+                              spreadRadius: 1,
+                              blurRadius: 3)
+                        ]),
+                    child: const Center(
+                      child: Icon(
+                        IconsaxOutline.headphone,
+                        color: mainColor,
+                        size: 45,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ))
+                ,Column(
                   children: [
                     SizedBox(
                       height: h * .09,
