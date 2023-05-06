@@ -1,10 +1,11 @@
-import 'package:book_reading_app/ui/screens/sections/audio_books/audio_books_section.dart';
-import 'package:book_reading_app/ui/screens/sections/home/home_section.dart';
+import 'package:book_reading_app/ui/screens/main_page_sections/audio_books/audio_books_section.dart';
+import 'package:book_reading_app/ui/screens/main_page_sections/home/home_section.dart';
 import 'package:book_reading_app/ui/theme/colors.dart';
 import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// creadits https://dribbble.com/shots/20648515-Book-Reading-App-Design-with-Audio-Feature
 void main() {
   runApp(const MyApp());
 }

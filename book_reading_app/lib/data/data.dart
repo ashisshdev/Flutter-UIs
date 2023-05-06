@@ -99,4 +99,4 @@ List<Book> allBooks = List.generate(
 Random random = Random();
 
 String randomDuration() => '${random.nextInt(3) + 2}h ${random.nextInt(11) * 5}min';
-int randomRating() => random.nextInt(2) + 3;
+int randomRating() => random.nextInt(4) + 2;

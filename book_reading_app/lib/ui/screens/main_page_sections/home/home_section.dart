@@ -2,7 +2,7 @@ import 'package:book_reading_app/data/data.dart';
 import 'package:book_reading_app/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'home_section_widgets.dart';
+import 'widgets/home_section_widgets.dart';
 
 class HomeSection extends StatefulWidget {
   const HomeSection({super.key});
@@ -56,21 +56,8 @@ class _HomeSectionState extends State<HomeSection> {
                           onTap: () {
                             selectedCategory.value = categories[index];
                           },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(Radius.circular(30)),
-                              color: categories[index] == value ? blackColor : Colors.grey.shade200,
-                            ),
-                            margin: const EdgeInsets.all(5),
-                            child: Center(
-                                child: Text(
-                              categories[index],
-                              style: TextStyle(
-                                  fontWeight: categories[index] == value ? FontWeight.w600 : FontWeight.w400,
-                                  color: categories[index] == value ? Colors.white : blackColor),
-                            )),
-                          ),
+                          child: GenreChip(
+                              isSelected: categories[index] == value, text: categories[index]),
                         );
                       },
                     );
@@ -92,7 +79,8 @@ class _HomeSectionState extends State<HomeSection> {
                       decoration: BoxDecoration(
                           borderRadius: const BorderRadius.all(Radius.circular(10)),
                           color: Colors.grey,
-                          image: DecorationImage(image: AssetImage(allBooks[index].image), fit: BoxFit.cover)),
+                          image: DecorationImage(
+                              image: AssetImage(allBooks[index].image), fit: BoxFit.cover)),
                       margin: const EdgeInsets.all(5),
                     );
                   },
@@ -120,5 +108,30 @@ class _HomeSectionState extends State<HomeSection> {
             ],
           ),
         ));
+  }
+}
+
+class GenreChip extends StatelessWidget {
+  final bool isSelected;
+  final String text;
+  const GenreChip({super.key, required this.isSelected, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(30)),
+        color: isSelected ? blackColor : Colors.grey.shade200,
+      ),
+      margin: const EdgeInsets.all(5),
+      child: Center(
+          child: Text(
+        text,
+        style: TextStyle(
+            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+            color: isSelected ? Colors.white : blackColor),
+      )),
+    );
   }
 }
