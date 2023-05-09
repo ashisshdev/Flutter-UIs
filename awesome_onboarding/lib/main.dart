@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       home: MyOnboarding(),
     );
   }
@@ -318,10 +319,17 @@ class _MyOnboardingState extends State<MyOnboarding> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Skip",
-                          textScaleFactor: 1.7,
-                          style: TextStyle(fontWeight: FontWeight.w500),
+                        InkWell(
+                          onTap: () {
+                            pageController.animateToPage(2,
+                                duration: Duration(milliseconds: selectedIndex == 0 ? 1500 : 600),
+                                curve: Curves.easeIn);
+                          },
+                          child: const Text(
+                            "Skip",
+                            textScaleFactor: 1.7,
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
                         ),
                         Container(
                           padding: const EdgeInsets.all(10),
@@ -333,8 +341,7 @@ class _MyOnboardingState extends State<MyOnboarding> {
                             onPressed: () {
                               if (pageValue < 2.0) {
                                 pageController.nextPage(
-                                    duration: const Duration(seconds: 1),
-                                    curve: Curves.ease);
+                                    duration: const Duration(seconds: 1), curve: Curves.ease);
                               }
                             },
                             icon: const Icon(
@@ -400,10 +407,7 @@ class ItemCard extends StatelessWidget {
                   textScaleFactor: 2.5,
                   maxLines: 2,
                   style: const TextStyle(
-                      fontWeight: FontWeight.w800,
-                      height: 1.2,
-                      letterSpacing: 1.5,
-                      wordSpacing: 7),
+                      fontWeight: FontWeight.w800, height: 1.2, letterSpacing: 1.5, wordSpacing: 7),
                 ),
               ),
               SizedBox(height: h * 0.03),
