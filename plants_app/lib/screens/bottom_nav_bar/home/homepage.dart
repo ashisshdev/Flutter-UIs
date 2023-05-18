@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:plants_app/data/data.dart';
-import 'package:plants_app/screens/bottom_nav_bar/home/homepage_widgets.dart';
 import 'package:plants_app/utils/assets.dart';
+
+import 'homepage_widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,15 +12,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with TickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController tabController;
 
   @override
   void initState() {
     super.initState();
-    tabController = TabController(
-        length: plantCategories.length, vsync: this);
+    tabController = TabController(length: plantCategories.length, vsync: this);
     tabController.addListener(() {
       setState(() {});
     });
@@ -39,37 +38,28 @@ class _HomePageState extends State<HomePage>
                 floating: false,
                 toolbarHeight: 110,
                 flexibleSpace: Container(
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 10, horizontal: 20),
+                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Center(
                     child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                          children: const [
+                        const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Text(
                               "Good Morning!",
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w600),
+                              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
                             ),
                             Text(
                               "Sarah",
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w600),
+                              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),
                         const Spacer(),
                         AppBarIcon(
-                          svgPath: AppAssets
-                              .svgIcons.notificationIcon,
+                          svgPath: AppAssets.svgIcons.notificationIcon,
                           count: "7",
                         ),
                         const SizedBox(
@@ -90,13 +80,11 @@ class _HomePageState extends State<HomePage>
                 elevation: 0,
                 toolbarHeight: 125,
                 flexibleSpace: Container(
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 10, horizontal: 10),
+                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SearchBar(),
+                      const MySearchBar(),
                       TabBar(
                           controller: tabController,
                           isScrollable: true,
@@ -105,13 +93,8 @@ class _HomePageState extends State<HomePage>
                           indicatorPadding: EdgeInsets.zero,
                           labelPadding: EdgeInsets.zero,
                           tabs: [
-                            for (int i = 0;
-                                i < plantCategories.length;
-                                i++) ...[
-                              TabIcon(
-                                  text: plantCategories[i],
-                                  isSelected:
-                                      tabController.index == i)
+                            for (int i = 0; i < plantCategories.length; i++) ...[
+                              TabIcon(text: plantCategories[i], isSelected: tabController.index == i)
                             ]
                           ]),
                     ],
@@ -127,9 +110,7 @@ class _HomePageState extends State<HomePage>
               mainAxisSpacing: 8,
               crossAxisSpacing: 8,
               padding: const EdgeInsets.all(5),
-              gridDelegate:
-                  const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
+              gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (context, index) {
                 return PlantCard(plant: allPlants[index]);
               },

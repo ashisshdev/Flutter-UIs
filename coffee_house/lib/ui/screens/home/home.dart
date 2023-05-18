@@ -1,5 +1,6 @@
 import 'package:coffee_house/ui/data/dummy_data.dart';
 import 'package:coffee_house/ui/data/models.dart';
+import 'package:coffee_house/ui/screens/details/details.dart';
 import 'package:coffee_house/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -69,7 +70,7 @@ class HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Expanded(
+            Flexible(
               flex: 1,
               child: NavigationRail(
                 labelType: NavigationRailLabelType.all,
@@ -245,116 +246,157 @@ class CoffeeItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
     final h = MediaQuery.of(context).size.height;
-    return Container(
-        height: h * 0.42,
-        margin: const EdgeInsets.all(10),
-        child: Stack(
-          children: [
-            Positioned(
-                bottom: 0,
-                right: 0,
-                left: 0,
-                child: Container(
-                  height: h * 0.27,
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: coffee.cardColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    image: const DecorationImage(
-                      image: AssetImage(
-                        'assets/doodle.png',
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(slideRoute(Details(coffee: coffee)));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => Details(coffee: coffee),
+        // ));
+      },
+      child: Container(
+          height: h * 0.42,
+          margin: const EdgeInsets.all(10),
+          child: Stack(
+            children: [
+              Positioned(
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                  child: Container(
+                    height: h * 0.27,
+                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: coffee.cardColor,
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      image: const DecorationImage(
+                        image: AssetImage(
+                          'assets/doodle.png',
+                        ),
+                        fit: BoxFit.cover,
+                        opacity: 0.05,
                       ),
-                      fit: BoxFit.cover,
-                      opacity: 0.05,
                     ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Price",
-                        textScaleFactor: 1.4,
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        "\$${coffee.price}",
-                        textScaleFactor: 3.0,
-                        style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
-                      ),
-                      const Spacer(),
-                      Text(
-                        coffee.name,
-                        textScaleFactor: 2.8,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        // style: TextStyle(ma),
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "${coffee.reviews}  review",
-                                textScaleFactor: 1.5,
-                                style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  for (int i = 0; i < int.parse(coffee.rating.toStringAsFixed(0)); i++) ...[
-                                    const Icon(
-                                      Icons.star,
-                                      color: Colors.white,
-                                      size: 15,
-                                    )
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Price",
+                          textScaleFactor: 1.4,
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          "\$${coffee.price}",
+                          textScaleFactor: 3.0,
+                          style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+                        ),
+                        const Spacer(),
+                        Text(
+                          coffee.name,
+                          textScaleFactor: 2.8,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          // style: TextStyle(ma),
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "${coffee.reviews}  review",
+                                  textScaleFactor: 1.5,
+                                  style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    for (int i = 0; i < int.parse(coffee.rating.toStringAsFixed(0)); i++) ...[
+                                      const Icon(
+                                        Icons.star,
+                                        color: Colors.white,
+                                        size: 15,
+                                      )
+                                    ],
+                                    for (int i = 0; i < 5 - int.parse(coffee.rating.toStringAsFixed(0)); i++) ...[
+                                      const Icon(
+                                        Icons.star,
+                                        color: Colors.white54,
+                                        size: 15,
+                                      )
+                                    ]
                                   ],
-                                  for (int i = 0; i < 5 - int.parse(coffee.rating.toStringAsFixed(0)); i++) ...[
-                                    const Icon(
-                                      Icons.star,
-                                      color: Colors.white54,
-                                      size: 15,
-                                    )
-                                  ]
-                                ],
-                              )
-                              // Text("${coffee.rating} Stars"),
-                            ],
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
+                                )
+                                // Text("${coffee.rating} Stars"),
+                              ],
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
                               ),
-                            ),
-                            child: const Text(
-                              "+ Add",
-                              textScaleFactor: 1.5,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
+                              child: const Text(
+                                "+ Add",
+                                textScaleFactor: 1.5,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  )),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: Hero(
+                  tag: coffee.image,
+                  child: Image.asset(
+                    coffee.image,
+                    fit: BoxFit.contain,
+                    height: h * .28,
+                    width: w * 0.45,
+                    alignment: Alignment.bottomCenter,
                   ),
-                )),
-            Positioned(
-              top: 0,
-              right: 0,
-              child: Image.asset(
-                coffee.image,
-                fit: BoxFit.contain,
-                height: h * .28,
-                width: w * 0.45,
-                alignment: Alignment.bottomCenter,
+                ),
               ),
-            ),
-          ],
-        ));
+            ],
+          )),
+    );
   }
+}
+
+// Route slideRoute(Widget child) {
+//   print("haha");
+//   return PageRouteBuilder(
+//     pageBuilder: (context, animation, secondaryAnimation) => child,
+//     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//       return child;
+//     },
+//   );
+// }
+
+Route slideRoute(Widget child) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      // const begin = Offset(1, 0.0);
+      const begin = Offset(0.0, 0.0);
+
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

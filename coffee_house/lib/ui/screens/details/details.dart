@@ -3,6 +3,133 @@
 // import 'package:flutter_icons/flutter_icons.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
+import 'package:coffee_house/ui/data/models.dart';
+import 'package:coffee_house/ui/theme/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class Details extends StatelessWidget {
+  final Coffee coffee;
+  const Details({super.key, required this.coffee});
+
+  @override
+  Widget build(BuildContext context) {
+    final h = MediaQuery.of(context).size.height;
+    final w = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: coffee.cardColor,
+        systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: coffee.cardColor),
+        leading: const Icon(Icons.arrow_back),
+        actions: const [Icon(Icons.shopping_bag)],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: h * 0.45,
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Positioned(
+                      top: 0,
+                      child: TweenAnimationBuilder(
+                        tween: Tween<double>(begin: 1, end: 0),
+                        duration: const Duration(milliseconds: 400),
+                        builder: (context, value, child) {
+                          return Transform.translate(
+                            offset: Offset(0, h * -0.3 * value),
+                            child: Opacity(
+                              opacity: 1 - value,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: coffee.cardColor,
+                                    image: const DecorationImage(
+                                        image: AssetImage(
+                                          'assets/doodle.png',
+                                        ),
+                                        fit: BoxFit.cover,
+                                        opacity: 0.05),
+                                    borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(50), bottomRight: Radius.circular(50))),
+                                height: h * 0.35,
+                                width: w,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Hero(
+                        tag: coffee.image,
+                        child: Image.asset(
+                          coffee.image,
+                          height: h * 0.35,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: h * 0.02),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  coffee.name,
+                  textScaleFactor: 2.5,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  BriefWidget(icon: Icons.person, value: coffee.reviews.toString(), cardColor: coffee.cardColor),
+                  const Divider(thickness: 10, color: Colors.black),
+                  BriefWidget(icon: Icons.star, value: coffee.rating.toString(), cardColor: coffee.cardColor),
+                  const Divider(thickness: 10, color: Colors.black),
+                  BriefWidget(icon: Icons.gamepad, value: coffee.rank.toString(), cardColor: coffee.cardColor),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class BriefWidget extends StatelessWidget {
+  final IconData icon;
+  final String value;
+  final Color cardColor;
+  const BriefWidget({super.key, required this.icon, required this.value, required this.cardColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: titleColor,
+          size: 30,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          value,
+          textScaleFactor: 1.7,
+          style: TextStyle(color: cardColor, fontWeight: FontWeight.bold),
+        )
+      ],
+    );
+  }
+}
+
 // class CoffeeDetails extends StatefulWidget {
 //   final imgPath, headerColor;
 
